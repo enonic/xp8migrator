@@ -148,6 +148,17 @@
       </config>
       <default>2025-08-29T07:44:27Z</default>
     </input>
+    <input name="myLocalDateTime_1" type="DateTime">
+      <label>My LocalDateTime_1</label>
+      <config>
+        <timezone>false</timezone>
+      </config>
+      <default>2025-08-29T07:44:27</default>
+    </input>
+    <input name="myLocalDateTime_2" type="DateTime">
+      <label>My LocalDateTime_2</label>
+      <default>2025-08-29T07:44:27</default>
+    </input>
     <input name="mydate" type="Date">
       <label>My Date</label>
       <default>2011-09-12</default>

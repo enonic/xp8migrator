@@ -41,7 +41,7 @@ public class InputYml<T>
 
     public InputYml( final Input source, final Class<T> inputType )
     {
-        type = source.getInputType().toString();
+        type = resolveInputTypeName( source );
         name = source.getName();
         label = localizeProperty( source.getLabel(), source.getLabelI18nKey() );
         helpText = localizeProperty( source.getHelpText(), source.getHelpTextI18nKey() );
@@ -84,5 +84,10 @@ public class InputYml<T>
                 }
             } );
         }
+    }
+
+    protected String resolveInputTypeName( final Input source )
+    {
+        return source.getInputType().toString();
     }
 }

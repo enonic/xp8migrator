@@ -13,6 +13,7 @@ import com.enonic.xp.form.FieldSet;
 import com.enonic.xp.form.FormItem;
 import com.enonic.xp.form.FormItemType;
 import com.enonic.xp.form.Input;
+import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.inputtype.InputTypeName;
 import com.enonic.xp.migrator.yml.FieldSetYml;
 import com.enonic.xp.migrator.yml.FormItemSetYml;
@@ -31,6 +32,7 @@ import com.enonic.xp.migrator.yml.input.DoubleYml;
 import com.enonic.xp.migrator.yml.input.GeoPointYml;
 import com.enonic.xp.migrator.yml.input.HtmlAreaYml;
 import com.enonic.xp.migrator.yml.input.ImageSelectorYml;
+import com.enonic.xp.migrator.yml.input.InstantYml;
 import com.enonic.xp.migrator.yml.input.LongYml;
 import com.enonic.xp.migrator.yml.input.MediaSelectorYml;
 import com.enonic.xp.migrator.yml.input.RadioButtonYml;
@@ -44,6 +46,19 @@ public class FormItemSerializer
 {
     private static final Map<InputTypeName, Function<Input, Object>> CONVERTERS = new HashMap<>();
 
+    private static final Function<Input, Object> DATE_TIME_TYPE_RESOLVER = ( input ) -> {
+        final InputTypeConfig inputTypeConfig = input.getInputTypeConfig();
+
+        if ( Boolean.TRUE.toString().equals( inputTypeConfig.getValue( "timezone" ) ) )
+        {
+            return new InstantYml( input );
+        }
+        else
+        {
+            return new DateTimeYml( input );
+        }
+    };
+
     static
     {
         CONVERTERS.put( InputTypeName.TEXT_LINE, TextLineYml::new );
@@ -51,7 +66,7 @@ public class FormItemSerializer
         CONVERTERS.put( InputTypeName.COMBO_BOX, ComboBoxYml::new );
         CONVERTERS.put( InputTypeName.CONTENT_TYPE_FILTER, ContentTypeFilterYml::new );
         CONVERTERS.put( InputTypeName.CUSTOM_SELECTOR, CustomSelectorYml::new );
-        CONVERTERS.put( InputTypeName.DATE_TIME, DateTimeYml::new );
+        CONVERTERS.put( InputTypeName.DATE_TIME, DATE_TIME_TYPE_RESOLVER );
         CONVERTERS.put( InputTypeName.DATE, DateYml::new );
         CONVERTERS.put( InputTypeName.ATTACHMENT_UPLOADER, AttachmentUploaderYml::new );
         CONVERTERS.put( InputTypeName.CONTENT_SELECTOR, ContentSelectorYml::new );

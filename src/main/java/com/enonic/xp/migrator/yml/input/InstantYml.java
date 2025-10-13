@@ -5,11 +5,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.enonic.xp.form.Input;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DateTimeYml
+public class InstantYml
     extends InputYml<String>
 {
-    public DateTimeYml( final Input source )
+    public InstantYml( final Input source )
     {
         super( source, String.class );
+    }
+
+    @Override
+    protected String resolveInputTypeName( final Input source )
+    {
+        return "Instant";
     }
 }

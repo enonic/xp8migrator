@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.enonic.xp.form.Form;
 import com.enonic.xp.inputtype.InputTypeConfig;

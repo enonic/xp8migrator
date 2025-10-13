@@ -16,8 +16,8 @@ public class OccurrencesSerializer
         throws IOException
     {
         gen.writeStartObject();
-        gen.writeNumberField( "minimum", occurrences.getMinimum() );
-        gen.writeNumberField( "maximum", occurrences.getMaximum() );
+        gen.writeNumberField( "min", occurrences.getMinimum() );
+        gen.writeNumberField( "max", occurrences.getMaximum() );
         gen.writeEndObject();
     }
 }
