@@ -26,7 +26,6 @@ public class TextAreaYml
 
         if ( inputTypeConfig.getValue( "showCounter" ) != null )
         {
-            config = new LinkedHashMap<>();
             config.put( "showCounter", inputTypeConfig.getValue( "showCounter", Boolean.class ) );
         }
 

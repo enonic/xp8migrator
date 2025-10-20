@@ -16,7 +16,7 @@ public class CheckBoxYml
         final InputTypeDefault inputDefaultValue = source.getDefaultValue();
         if ( inputDefaultValue != null )
         {
-            defaultValue = Objects.equals( "checked", inputDefaultValue.getValue( "default", String.class ) );
+            config.put( "default", Objects.equals( "checked", inputDefaultValue.getValue( "default", String.class ) ) );
         }
 
         setConfig( source );

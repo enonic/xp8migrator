@@ -1,6 +1,5 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,8 +21,6 @@ public class MediaSelectorYml
 
         if ( inputTypeConfig.getSize() > 0 )
         {
-            config = new LinkedHashMap<>();
-
             if ( inputTypeConfig.getValue( "treeMode" ) != null )
             {
                 config.put( "treeMode", inputTypeConfig.getValue( "treeMode", Boolean.class ) );
@@ -47,7 +44,7 @@ public class MediaSelectorYml
                 config.put( "allowPath", allowPathValues.stream().map( InputTypeProperty::getValue ).collect( Collectors.toList() ) );
             }
 
-            setConfig( source );
+            setConfig( source, "treeMode", "hideToggleIcon", "allowContentType", "allowPath" );
         }
     }
 }

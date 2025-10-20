@@ -35,7 +35,6 @@ public class TextLineYml
 
         if ( inputTypeConfig.getValue( "showCounter" ) != null )
         {
-            config = new LinkedHashMap<>();
             showCounter = inputTypeConfig.getValue( "showCounter", Boolean.class );
         }
 

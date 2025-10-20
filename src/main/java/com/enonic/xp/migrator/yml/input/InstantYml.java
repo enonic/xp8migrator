@@ -11,6 +11,7 @@ public class InstantYml
     public InstantYml( final Input source )
     {
         super( source, String.class );
+        setConfig( source, "timezone" );
     }
 
     @Override

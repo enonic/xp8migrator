@@ -22,8 +22,6 @@ public class ImageSelectorYml
 
         if ( inputTypeConfig.getSize() > 0 )
         {
-            config = new LinkedHashMap<>();
-
             if ( inputTypeConfig.getValue( "treeMode" ) != null )
             {
                 config.put( "treeMode", inputTypeConfig.getValue( "treeMode", Boolean.class ) );

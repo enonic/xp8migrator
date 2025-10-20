@@ -22,8 +22,6 @@ public class CustomSelectorYml
 
         if ( inputTypeConfig.getSize() > 0 )
         {
-            config = new LinkedHashMap<>();
-
             final InputTypeProperty serviceProperty = inputTypeConfig.getProperty( "service" );
             if ( serviceProperty != null )
             {

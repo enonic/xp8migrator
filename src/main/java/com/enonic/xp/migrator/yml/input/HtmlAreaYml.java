@@ -19,8 +19,6 @@ public class HtmlAreaYml
 
         if ( inputTypeConfig.getSize() > 0 )
         {
-            config = new LinkedHashMap<>();
-
             if ( inputTypeConfig.getValue( "exclude" ) != null )
             {
                 config.put( "exclude", inputTypeConfig.getValue( "exclude" ) );

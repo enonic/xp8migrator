@@ -1,6 +1,5 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.LinkedHashMap;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,8 +21,6 @@ public class ContentSelectorYml
 
         if ( inputTypeConfig.getSize() > 0 )
         {
-            config = new LinkedHashMap<>();
-
             final Set<InputTypeProperty> allowContentTypeValues = inputTypeConfig.getProperties( "allowContentType" );
             if ( !allowContentTypeValues.isEmpty() )
             {

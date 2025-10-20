@@ -15,7 +15,8 @@ public record MixinDirPostMigrator(Path resourceDir)
         {
             try
             {
-                Files.move( mixinDir, resourceDir.resolve( "form-fragments" ) );
+                final Path formFragmentsDir = resourceDir.resolve( "site" ).resolve( "form-fragments" );
+                Files.move( mixinDir, formFragmentsDir );
             }
             catch ( IOException e )
             {

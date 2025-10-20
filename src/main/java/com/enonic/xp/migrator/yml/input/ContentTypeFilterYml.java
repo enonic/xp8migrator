@@ -1,7 +1,5 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.LinkedHashMap;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import com.enonic.xp.form.Input;
@@ -17,10 +15,14 @@ public class ContentTypeFilterYml
 
         final InputTypeConfig inputTypeConfig = source.getInputTypeConfig();
 
-        if ( inputTypeConfig.getValue( "context" ) != null )
+        if ( inputTypeConfig.getSize() > 0 )
         {
-            config = new LinkedHashMap<>();
-            config.put( "context", inputTypeConfig.getValue( "context", Boolean.class ) );
+            if ( inputTypeConfig.getValue( "context" ) != null )
+            {
+                config.put( "context", inputTypeConfig.getValue( "context", Boolean.class ) );
+            }
+
+            setConfig( source, "context" );
         }
     }
 }

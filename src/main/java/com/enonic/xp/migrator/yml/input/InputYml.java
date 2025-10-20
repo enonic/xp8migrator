@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.enonic.xp.form.Input;
 import com.enonic.xp.form.Occurrences;
@@ -34,10 +33,7 @@ public class InputYml<T>
 
     public Occurrences occurrences;
 
-    @JsonProperty("default")
-    public Object defaultValue;
-
-    public Map<String, Object> config;
+    public Map<String, Object> config = new LinkedHashMap<>();
 
     public InputYml( final Input source, final Class<T> inputType )
     {
@@ -54,7 +50,7 @@ public class InputYml<T>
         final InputTypeDefault inputDefaultValue = source.getDefaultValue();
         if ( inputDefaultValue != null )
         {
-            defaultValue = inputDefaultValue.getValue( "default", inputType );
+            config.put( "default", inputDefaultValue.getValue( "default", inputType ) );
         }
     }
 
@@ -70,8 +66,6 @@ public class InputYml<T>
 
         if ( !propertyNames.isEmpty() )
         {
-            config = config != null ? config : new LinkedHashMap<>();
-
             propertyNames.forEach( propertyName -> {
                 final Set<InputTypeProperty> properties = inputTypeConfig.getProperties( propertyName );
                 if ( properties.size() == 1 )
