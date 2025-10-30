@@ -14,7 +14,7 @@ import static com.google.common.base.Strings.nullToEmpty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CmsDescriptorYml
 {
-    public List<XData> x;
+    public List<XData> mixin;
 
     public Form form;
 
@@ -25,7 +25,7 @@ public class CmsDescriptorYml
         final XDataMappings xDataMappings = descriptor.getXDataMappings();
         if ( xDataMappings != null && xDataMappings.isNotEmpty() )
         {
-            x = new ArrayList<>();
+            mixin = new ArrayList<>();
             xDataMappings.forEach( xDataMapping -> {
                 final XData xData = new XData();
 
@@ -36,7 +36,7 @@ public class CmsDescriptorYml
                 }
                 xData.optional = xDataMapping.getOptional();
 
-                x.add( xData );
+                mixin.add( xData );
             } );
         }
     }
