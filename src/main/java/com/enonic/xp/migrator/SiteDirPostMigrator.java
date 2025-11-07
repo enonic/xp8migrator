@@ -12,13 +12,15 @@ public record SiteDirPostMigrator(Path resourcesDir)
         final Path siteDir = resourcesDir.resolve( "site" );
         final Path cmsDir = resourcesDir.resolve( "cms" );
 
-        try
-        {
-            Files.move( siteDir, cmsDir );
-        }
-        catch ( IOException e )
-        {
-            throw new UncheckedIOException( e );
+        if ( Files.exists( siteDir ) ) {
+            try
+            {
+                Files.move( siteDir, cmsDir );
+            }
+            catch ( IOException e )
+            {
+                throw new UncheckedIOException( e );
+            }
         }
     }
 }
