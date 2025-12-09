@@ -29,6 +29,6 @@ public class LongYml
             max = config.getValue( "max", Long.class );
         }
 
-        setConfig( source, "min", "max" );
+        setAttributes( source, "min", "max" );
     }
 }

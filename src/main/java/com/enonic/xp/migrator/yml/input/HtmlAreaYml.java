@@ -1,7 +1,5 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.LinkedHashMap;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import com.enonic.xp.form.Input;
@@ -11,6 +9,12 @@ import com.enonic.xp.inputtype.InputTypeConfig;
 public class HtmlAreaYml
     extends InputYml<String>
 {
+    public String exclude;
+
+    public String include;
+
+    public String allowHeadings;
+
     public HtmlAreaYml( final Input source )
     {
         super( source, String.class );
@@ -21,20 +25,20 @@ public class HtmlAreaYml
         {
             if ( inputTypeConfig.getValue( "exclude" ) != null )
             {
-                config.put( "exclude", inputTypeConfig.getValue( "exclude" ) );
+                exclude = inputTypeConfig.getValue( "exclude" );
             }
 
             if ( inputTypeConfig.getValue( "include" ) != null )
             {
-                config.put( "include", inputTypeConfig.getValue( "include" ) );
+                include = inputTypeConfig.getValue( "include" );
             }
 
             if ( inputTypeConfig.getValue( "allowHeadings" ) != null )
             {
-                config.put( "allowHeadings", inputTypeConfig.getValue( "allowHeadings" ) );
+                allowHeadings = inputTypeConfig.getValue( "allowHeadings" );
             }
 
-            setConfig( source, "exclude", "include", "allowHeadings" );
+            setAttributes( source, "exclude", "include", "allowHeadings" );
         }
     }
 }

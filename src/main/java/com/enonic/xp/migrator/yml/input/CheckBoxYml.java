@@ -1,24 +1,27 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.Objects;
-
 import com.enonic.xp.form.Input;
-import com.enonic.xp.inputtype.InputTypeDefault;
+import com.enonic.xp.inputtype.InputTypeConfig;
 
 public class CheckBoxYml
-    extends InputYml<Boolean>
+    extends InputYml<String>
 {
+    public String alignment;
 
     public CheckBoxYml( final Input source )
     {
-        super( source, Boolean.class );
+        super( source, String.class );
 
-        final InputTypeDefault inputDefaultValue = source.getDefaultValue();
-        if ( inputDefaultValue != null )
+        final InputTypeConfig inputTypeConfig = source.getInputTypeConfig();
+
+        if ( inputTypeConfig.getSize() > 0 )
         {
-            config.put( "default", Objects.equals( "checked", inputDefaultValue.getValue( "default", String.class ) ) );
+            if ( inputTypeConfig.getValue( "alignment" ) != null )
+            {
+                alignment = inputTypeConfig.getValue( "alignment" );
+            }
         }
 
-        setConfig( source );
+        setAttributes( source );
     }
 }

@@ -29,6 +29,6 @@ public class DoubleYml
             max = inputTypeConfig.getValue( "max", Double.class );
         }
 
-        setConfig( source, "min", "max" );
+        setAttributes( source, "min", "max" );
     }
 }

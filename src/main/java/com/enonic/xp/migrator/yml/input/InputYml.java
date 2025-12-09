@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import com.enonic.xp.form.Input;
 import com.enonic.xp.form.Occurrences;
@@ -33,7 +34,10 @@ public class InputYml<T>
 
     public Occurrences occurrences;
 
-    public Map<String, Object> config = new LinkedHashMap<>();
+    @JsonProperty("default")
+    public T defaultValue;
+
+    public Map<String, Object> attributes;
 
     public InputYml( final Input source, final Class<T> inputType )
     {
@@ -48,14 +52,11 @@ public class InputYml<T>
         }
 
         final InputTypeDefault inputDefaultValue = source.getDefaultValue();
-        if ( inputDefaultValue != null )
-        {
-            config.put( "default", inputDefaultValue.getValue( "default", inputType ) );
-        }
+        resolveDefaultValue( inputDefaultValue, inputType );
     }
 
     @JsonIgnore
-    protected final void setConfig( final Input source, final String... excludeProperties )
+    protected final void setAttributes( final Input source, final String... excludeProperties )
     {
         final InputTypeConfig inputTypeConfig = source.getInputTypeConfig();
 
@@ -66,22 +67,64 @@ public class InputYml<T>
 
         if ( !propertyNames.isEmpty() )
         {
+            attributes = new LinkedHashMap<>();
             propertyNames.forEach( propertyName -> {
                 final Set<InputTypeProperty> properties = inputTypeConfig.getProperties( propertyName );
                 if ( properties.size() == 1 )
                 {
-                    config.put( propertyName, properties.iterator().next().getValue() );
+                    attributes.put( propertyName, properties.iterator().next().getValue() );
                 }
                 else
                 {
-                    config.put( propertyName, properties.stream().map( InputTypeProperty::getValue ).collect( Collectors.toSet() ) );
+                    attributes.put( propertyName, properties.stream().map( InputTypeProperty::getValue ).collect( Collectors.toSet() ) );
                 }
             } );
         }
     }
 
+    protected void resolveDefaultValue( final InputTypeDefault inputDefaultValue, final Class<T> inputType )
+    {
+        if ( inputDefaultValue != null )
+        {
+            this.defaultValue = inputDefaultValue.getValue( "default", inputType );
+        }
+    }
+
     protected String resolveInputTypeName( final Input source )
     {
-        return source.getInputType().toString();
+        return InputTypeNameResolver.resolve( source );
+    }
+
+    private static final class InputTypeNameResolver
+    {
+        private static final Map<String, String> INPUT_TYPES_MAPPING = new LinkedHashMap<>();
+
+        static
+        {
+            INPUT_TYPES_MAPPING.put( "textline", "TextLine" );
+            INPUT_TYPES_MAPPING.put( "checkbox", "CheckBox" );
+            INPUT_TYPES_MAPPING.put( "combobox", "ComboBox" );
+            INPUT_TYPES_MAPPING.put( "contenttypefilter", "ContentTypeFilter" );
+            INPUT_TYPES_MAPPING.put( "customselector", "CustomSelector" );
+            INPUT_TYPES_MAPPING.put( "datetime", "DateTime" );
+            INPUT_TYPES_MAPPING.put( "date", "Date" );
+            INPUT_TYPES_MAPPING.put( "attachmentuploader", "AttachmentUploader" );
+            INPUT_TYPES_MAPPING.put( "contentselector", "ContentSelector" );
+            INPUT_TYPES_MAPPING.put( "double", "Double" );
+            INPUT_TYPES_MAPPING.put( "geopoint", "GeoPoint" );
+            INPUT_TYPES_MAPPING.put( "htmlarea", "HtmlArea" );
+            INPUT_TYPES_MAPPING.put( "imageselector", "ImageSelector" );
+            INPUT_TYPES_MAPPING.put( "long", "Long" );
+            INPUT_TYPES_MAPPING.put( "mediaselector", "MediaSelector" );
+            INPUT_TYPES_MAPPING.put( "radiobutton", "RadioButton" );
+            INPUT_TYPES_MAPPING.put( "tag", "Tag" );
+            INPUT_TYPES_MAPPING.put( "textarea", "TextArea" );
+            INPUT_TYPES_MAPPING.put( "time", "Time" );
+        }
+
+        static String resolve( final Input source )
+        {
+            return INPUT_TYPES_MAPPING.get( source.getInputType().toString().toLowerCase() );
+        }
     }
 }

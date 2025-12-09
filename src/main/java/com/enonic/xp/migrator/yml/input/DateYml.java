@@ -11,6 +11,6 @@ public class DateYml
     public DateYml( final Input source )
     {
         super( source, String.class );
-        setConfig( source );
+        setAttributes( source );
     }
 }

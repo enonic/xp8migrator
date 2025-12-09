@@ -19,7 +19,7 @@ import com.enonic.xp.migrator.yml.FieldSetYml;
 import com.enonic.xp.migrator.yml.FormItemSetYml;
 import com.enonic.xp.migrator.yml.FormOptionSetOptionYml;
 import com.enonic.xp.migrator.yml.FormOptionSetYml;
-import com.enonic.xp.migrator.yml.InlineMixinYml;
+import com.enonic.xp.migrator.yml.FormFragmentYml;
 import com.enonic.xp.migrator.yml.input.AttachmentUploaderYml;
 import com.enonic.xp.migrator.yml.input.CheckBoxYml;
 import com.enonic.xp.migrator.yml.input.ComboBoxYml;
@@ -93,7 +93,7 @@ public class FormItemSerializer
             case FORM_ITEM_SET -> gen.writeObject( new FormItemSetYml( formItem.toFormItemSet() ) );
             case FORM_OPTION_SET -> gen.writeObject( new FormOptionSetYml( formItem.toFormOptionSet() ) );
             case FORM_OPTION_SET_OPTION -> gen.writeObject( new FormOptionSetOptionYml( formItem.toFormOptionSetOption() ) );
-            case MIXIN_REFERENCE -> gen.writeObject( new InlineMixinYml( formItem.toInlineMixin() ) );
+            case MIXIN_REFERENCE -> gen.writeObject( new FormFragmentYml( formItem.toInlineMixin() ) );
             case INPUT -> gen.writeObject( convertInputToYml( formItem.toInput() ) );
             case LAYOUT ->
             {

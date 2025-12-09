@@ -8,6 +8,6 @@ public class AttachmentUploaderYml
     public AttachmentUploaderYml( final Input source )
     {
         super( source, String.class );
-        setConfig( source );
+        setAttributes( source );
     }
 }

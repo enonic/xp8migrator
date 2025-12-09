@@ -11,6 +11,7 @@ public class DateTimeYml
     public DateTimeYml( final Input source )
     {
         super( source, String.class );
-        setConfig( source, "timezone" );
+        // timezone only for Instant
+        setAttributes( source, "timezone" );
     }
 }
