@@ -1,7 +1,5 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.LinkedHashMap;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import com.enonic.xp.form.Input;
@@ -12,6 +10,8 @@ public class TextAreaYml
     extends InputYml<String>
 {
     public Integer maxLength;
+
+    public Boolean showCounter;
 
     public TextAreaYml( final Input source )
     {
@@ -26,9 +26,9 @@ public class TextAreaYml
 
         if ( inputTypeConfig.getValue( "showCounter" ) != null )
         {
-            config.put( "showCounter", inputTypeConfig.getValue( "showCounter", Boolean.class ) );
+            showCounter = inputTypeConfig.getValue( "showCounter", Boolean.class );
         }
 
-        setConfig( source, "maxLength", "showCounter" );
+        setAttributes( source, "maxLength", "showCounter" );
     }
 }

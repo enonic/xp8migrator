@@ -11,6 +11,6 @@ public class GeoPointYml
     public GeoPointYml( final Input source )
     {
         super( source, String.class );
-        setConfig( source );
+        setAttributes( source );
     }
 }

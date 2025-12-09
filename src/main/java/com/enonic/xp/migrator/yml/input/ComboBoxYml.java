@@ -49,7 +49,7 @@ public class ComboBoxYml
             } );
         }
 
-        setConfig( source, "option" );
+        setAttributes( source, "option" );
     }
 
 }

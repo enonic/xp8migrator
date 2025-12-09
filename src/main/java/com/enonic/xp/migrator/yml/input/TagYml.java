@@ -11,6 +11,6 @@ public class TagYml
     public TagYml( final Input source )
     {
         super( source, String.class );
-        setConfig( source );
+        setAttributes( source );
     }
 }

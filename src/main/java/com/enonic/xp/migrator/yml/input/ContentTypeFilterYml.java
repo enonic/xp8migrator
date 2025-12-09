@@ -9,6 +9,8 @@ import com.enonic.xp.inputtype.InputTypeConfig;
 public class ContentTypeFilterYml
     extends InputYml<String>
 {
+    public Boolean context;
+
     public ContentTypeFilterYml( final Input source )
     {
         super( source, String.class );
@@ -19,10 +21,10 @@ public class ContentTypeFilterYml
         {
             if ( inputTypeConfig.getValue( "context" ) != null )
             {
-                config.put( "context", inputTypeConfig.getValue( "context", Boolean.class ) );
+                context = inputTypeConfig.getValue( "context", Boolean.class );
             }
 
-            setConfig( source, "context" );
+            setAttributes( source, "context" );
         }
     }
 }

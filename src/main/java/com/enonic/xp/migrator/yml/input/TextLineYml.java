@@ -1,7 +1,5 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.LinkedHashMap;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import com.enonic.xp.form.Input;
@@ -38,6 +36,6 @@ public class TextLineYml
             showCounter = inputTypeConfig.getValue( "showCounter", Boolean.class );
         }
 
-        setConfig( source, "maxLength", "regexp", "showCounter" );
+        setAttributes( source, "maxLength", "regexp", "showCounter" );
     }
 }

@@ -11,6 +11,6 @@ public class TimeYml
     public TimeYml( final Input source )
     {
         super( source, String.class );
-        setConfig( source );
+        setAttributes( source );
     }
 }

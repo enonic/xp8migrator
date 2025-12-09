@@ -5,12 +5,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.enonic.xp.form.InlineMixin;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class InlineMixinYml
+public class FormFragmentYml
     extends FormItemYml
 {
     public String name;
 
-    public InlineMixinYml( final InlineMixin source )
+    public FormFragmentYml( final InlineMixin source )
     {
         super( "FormFragment" );
 

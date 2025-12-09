@@ -1,6 +1,6 @@
 package com.enonic.xp.migrator.yml.input;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -14,6 +14,12 @@ import com.enonic.xp.inputtype.InputTypeProperty;
 public class ImageSelectorYml
     extends InputYml<String>
 {
+    public List<String> allowPath;
+
+    public Boolean treeMode;
+
+    public Boolean hideToggleIcon;
+
     public ImageSelectorYml( final Input source )
     {
         super( source, String.class );
@@ -24,21 +30,21 @@ public class ImageSelectorYml
         {
             if ( inputTypeConfig.getValue( "treeMode" ) != null )
             {
-                config.put( "treeMode", inputTypeConfig.getValue( "treeMode", Boolean.class ) );
+                treeMode = inputTypeConfig.getValue( "treeMode", Boolean.class );
             }
 
             if ( inputTypeConfig.getValue( "hideToggleIcon" ) != null )
             {
-                config.put( "hideToggleIcon", inputTypeConfig.getValue( "hideToggleIcon", Boolean.class ) );
+                hideToggleIcon = inputTypeConfig.getValue( "hideToggleIcon", Boolean.class );
             }
 
             final Set<InputTypeProperty> allowPathValues = inputTypeConfig.getProperties( "allowPath" );
             if ( !allowPathValues.isEmpty() )
             {
-                config.put( "allowPath", allowPathValues.stream().map( InputTypeProperty::getValue ).collect( Collectors.toList() ) );
+                allowPath = allowPathValues.stream().map( InputTypeProperty::getValue ).collect( Collectors.toList() );
             }
 
-            setConfig( source, "treeMode", "hideToggleIcon", "allowPath" );
+            setAttributes( source, "treeMode", "hideToggleIcon", "allowPath" );
         }
     }
 }

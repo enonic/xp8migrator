@@ -52,6 +52,6 @@ public class RadioButtonYml
             } );
         }
 
-        setConfig( source, "option" );
+        setAttributes( source, "option" );
     }
 }
