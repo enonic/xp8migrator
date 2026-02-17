@@ -9,7 +9,7 @@ Build jar
 Usage
 
 ```
-java -jar .\build\libs\migrator.jar <PROJECT_DIR> [<APP_NAME>]
+java -jar ./build/libs/migrator.jar <PROJECT_DIR> [<APP_NAME>]
 ```
 
 1. `PROJECT_DIR` - path to the project directory. This is a required argument.
