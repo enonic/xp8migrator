@@ -120,6 +120,7 @@ public class InputYml<T>
             INPUT_TYPES_MAPPING.put( "tag", "Tag" );
             INPUT_TYPES_MAPPING.put( "textarea", "TextArea" );
             INPUT_TYPES_MAPPING.put( "time", "Time" );
+            INPUT_TYPES_MAPPING.put( "principalselector", "PrincipalSelector" );
         }
 
         static String resolve( final Input source )

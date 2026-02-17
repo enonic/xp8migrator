@@ -16,10 +16,10 @@ import com.enonic.xp.form.Input;
 import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.inputtype.InputTypeName;
 import com.enonic.xp.migrator.yml.FieldSetYml;
+import com.enonic.xp.migrator.yml.FormFragmentYml;
 import com.enonic.xp.migrator.yml.FormItemSetYml;
 import com.enonic.xp.migrator.yml.FormOptionSetOptionYml;
 import com.enonic.xp.migrator.yml.FormOptionSetYml;
-import com.enonic.xp.migrator.yml.FormFragmentYml;
 import com.enonic.xp.migrator.yml.input.AttachmentUploaderYml;
 import com.enonic.xp.migrator.yml.input.CheckBoxYml;
 import com.enonic.xp.migrator.yml.input.ComboBoxYml;
@@ -35,6 +35,7 @@ import com.enonic.xp.migrator.yml.input.ImageSelectorYml;
 import com.enonic.xp.migrator.yml.input.InstantYml;
 import com.enonic.xp.migrator.yml.input.LongYml;
 import com.enonic.xp.migrator.yml.input.MediaSelectorYml;
+import com.enonic.xp.migrator.yml.input.PrincipalSelectorYml;
 import com.enonic.xp.migrator.yml.input.RadioButtonYml;
 import com.enonic.xp.migrator.yml.input.TagYml;
 import com.enonic.xp.migrator.yml.input.TextAreaYml;
@@ -45,6 +46,8 @@ public class FormItemSerializer
     extends JsonSerializer<FormItem>
 {
     private static final Map<InputTypeName, Function<Input, Object>> CONVERTERS = new HashMap<>();
+
+    private static final InputTypeName PRINCIPAL_SELECTOR_TYPE_NAME = InputTypeName.from( "PrincipalSelector" );
 
     private static final Function<Input, Object> DATE_TIME_TYPE_RESOLVER = ( input ) -> {
         final InputTypeConfig inputTypeConfig = input.getInputTypeConfig();
@@ -80,6 +83,7 @@ public class FormItemSerializer
         CONVERTERS.put( InputTypeName.TAG, TagYml::new );
         CONVERTERS.put( InputTypeName.TEXT_AREA, TextAreaYml::new );
         CONVERTERS.put( InputTypeName.TIME, TimeYml::new );
+        CONVERTERS.put( PRINCIPAL_SELECTOR_TYPE_NAME, PrincipalSelectorYml::new );
     }
 
     @Override

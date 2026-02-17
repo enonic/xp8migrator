@@ -22,19 +22,19 @@
         </input>
       </items>
     </field-set>
-<!--    <field-set>-->
-<!--      <label>Groups</label>-->
-<!--      <items>-->
-<!--        <input name="defaultPrincipals" type="PrincipalSelector">-->
-<!--          <label>Groups</label>-->
-<!--          <help-text>Groups automatically associated to new users.</help-text>-->
-<!--          <occurrences minimum="0" maximum="0"/>-->
-<!--          <config>-->
-<!--            <principalType>GROUP</principalType>-->
-<!--          </config>-->
-<!--        </input>-->
-<!--      </items>-->
-<!--    </field-set>-->
+    <field-set>
+      <label>Groups</label>
+      <items>
+        <input name="defaultPrincipals" type="PrincipalSelector">
+          <label>Groups</label>
+          <help-text>Groups automatically associated to new users.</help-text>
+          <occurrences minimum="0" maximum="0"/>
+          <config>
+            <principalType>GROUP</principalType>
+          </config>
+        </input>
+      </items>
+    </field-set>
     <field-set>
       <label>Widget options</label>
       <items>
