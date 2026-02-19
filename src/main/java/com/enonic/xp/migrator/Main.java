@@ -5,24 +5,33 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Properties;
+import java.util.concurrent.Callable;
+
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
+import picocli.CommandLine.Option;
+import picocli.CommandLine.Parameters;
 
 import com.enonic.xp.app.ApplicationKey;
 
+@Command( name = "migrator", description = "Migrates XP project descriptors to XP8 format." )
 public class Main
+    implements Callable<Integer>
 {
-    public static void main( String[] args )
+    @Parameters( index = "0", description = "Path to the project directory." )
+    private Path projectPath;
+
+    @Parameters( index = "1", arity = "0..1", description = "Application name. Resolved from gradle.properties if not provided." )
+    private String appName;
+
+    @Option( names = {"-x", "--delete-migrated-xml"}, description = "Delete original XML files after successful migration." )
+    private boolean deleteMigratedXml;
+
+    @Override
+    public Integer call()
     {
-        if ( args.length == 0 )
-        {
-            System.err.println( "Missed command line argument \"projectPath\". " );
-            System.exit( 1 );
-        }
-
-        final Path projectPath = Paths.get( args[0] );
-
-        final ApplicationKey currentApplication = args.length > 1 ? ApplicationKey.from( args[1] ) : resolveApplicationKey( projectPath );
+        final ApplicationKey currentApplication = appName != null ? ApplicationKey.from( appName ) : resolveApplicationKey( projectPath );
 
         System.out.printf( "Start the migration of all descriptors for the project: %s%n", projectPath );
         System.out.printf( "Resolved applicationKey: %s%n", currentApplication );
@@ -32,7 +41,28 @@ public class Main
         migrationResult.getEntries().forEach(
             ( entry ) -> System.out.println( ( entry.migrated() ? "SUCCESS" : "FAILURE" ) + " " + entry.source() ) );
 
+        if ( deleteMigratedXml )
+        {
+            deleteMigratedXmlFiles( migrationResult );
+        }
+
         System.out.println( "Migration completed successfully." );
+        return 0;
+    }
+
+    private static void deleteMigratedXmlFiles( final MigrationResult migrationResult )
+    {
+        migrationResult.getEntries().stream().filter( MigrationResult.MigrationEntry::migrated ).forEach( entry -> {
+            try
+            {
+                Files.deleteIfExists( entry.source() );
+                System.out.println( "DELETED " + entry.source() );
+            }
+            catch ( IOException e )
+            {
+                System.err.println( "Failed to delete " + entry.source() + ": " + e.getMessage() );
+            }
+        } );
     }
 
     private static ApplicationKey resolveApplicationKey( final Path projectPath )
@@ -62,5 +92,11 @@ public class Main
         {
             throw new UncheckedIOException( "Failed to read the gradle.properties file", e );
         }
+    }
+
+    public static void main( String[] args )
+    {
+        int exitCode = new CommandLine( new Main() ).execute( args );
+        System.exit( exitCode );
     }
 }
