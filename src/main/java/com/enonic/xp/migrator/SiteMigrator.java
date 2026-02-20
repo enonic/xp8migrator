@@ -3,11 +3,15 @@ package com.enonic.xp.migrator;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.stream.Collectors;
 
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.migrator.yml.CmsDescriptorYml;
 import com.enonic.xp.migrator.yml.SiteDescriptorYml;
+import com.enonic.xp.resource.ResourceKey;
 import com.enonic.xp.site.SiteDescriptor;
+import com.enonic.xp.site.mapping.ControllerMappingDescriptor;
+import com.enonic.xp.site.mapping.ControllerMappingDescriptors;
 import com.enonic.xp.xml.parser.XmlSiteParser;
 
 public class SiteMigrator
@@ -38,8 +42,38 @@ public class SiteMigrator
         final Path cmsPath = resourcesDir.resolve( "site" ).resolve( "cms.yml" );
         new CmsMigrator( siteDescriptor, new MigrationParams( currentApplication, resourcesDir, cmsPath ) ).migrate();
 
-        return new SiteDescriptorYml( currentApplication, siteDescriptor );
+        final ControllerMappingDescriptors modifiedMappings = ControllerMappingDescriptors.from(
+            siteDescriptor.getMappingDescriptors().stream().map( this::remapMapDescriptor ).collect( Collectors.toList() ) );
 
+        return new SiteDescriptorYml( currentApplication,
+                                      SiteDescriptor.copyOf( siteDescriptor ).mappingDescriptors( modifiedMappings ).build() );
+    }
+
+    private ControllerMappingDescriptor remapMapDescriptor( final ControllerMappingDescriptor mapping )
+    {
+        final ControllerMappingDescriptor.Builder builder = ControllerMappingDescriptor.copyOf( mapping );
+
+        if ( mapping.getController() != null)
+        {
+            builder.controller( updateResourceKey( mapping.getController() ) );
+        }
+
+        if ( mapping.getFilter() != null)
+        {
+            builder.filter( updateResourceKey( mapping.getFilter() ) );
+        }
+
+        return builder.build();
+    }
+
+    private ResourceKey updateResourceKey( final ResourceKey key )
+    {
+        if ( key.getPath().startsWith( "/site/" ) )
+        {
+            return ResourceKey.from( key.getApplicationKey(), key.getPath().replace( "/site/", "/cms/" ) );
+        }
+
+        return key;
     }
 
     private static class CmsMigrator
