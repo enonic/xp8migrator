@@ -1,5 +1,9 @@
 <?xml version="1.0"?>
 <api xmlns="urn:enonic:xp:model:1.0">
+  <display-name>display-name</display-name>
+  <description>description</description>
+  <documentation-url>url</documentation-url>
+  <mount>true</mount>
   <allow>
     <principal>role:system.authenticated</principal>
   </allow>

@@ -17,8 +17,14 @@
     <response-processor name="filter2" order="20"/>
   </processors>
   <mappings>
-    <mapping controller="/controllers/preview.js" order="50">
+    <mapping controller="/folder/controllers/preview.js" order="50">
       <match>type:'.*:person|.*:movie|.*:folder'</match>
+    </mapping>
+    <mapping controller="/site/mappings/controller.js">
+      <pattern>/controller</pattern>
+    </mapping>
+    <mapping filter="/site/mappings/filter1.js">
+      <pattern>/filter1</pattern>
     </mapping>
   </mappings>
   <apis>

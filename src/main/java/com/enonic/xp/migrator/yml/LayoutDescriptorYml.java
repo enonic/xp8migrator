@@ -22,7 +22,7 @@ public class LayoutDescriptorYml
 
     public Form form;
 
-    public List<String> regions;
+    public List<String> regions = List.of();
 
     public List<Map<String, String>> config;
 
