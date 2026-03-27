@@ -12,6 +12,10 @@ import java.nio.file.attribute.BasicFileAttributes;
 
 import org.junit.jupiter.api.Test;
 
+import picocli.CommandLine;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 public class MigratorTest
 {
     @Test
@@ -46,7 +50,8 @@ public class MigratorTest
             }
         } );
 
-        Main.main( new String[]{migratorDir.toString()} );
+        int exitCode = new CommandLine( new Main() ).execute( migratorDir.toString() );
+        assertEquals( 0, exitCode );
     }
 
     private void deleteRecursively( Path path )

@@ -1,0 +1,8 @@
+{
+  "resources": {
+    "includes": [
+      {"pattern": "META-INF/xsd/.*\\.xsd"},
+      {"pattern": "logback\\.xml"}
+    ]
+  }
+}
