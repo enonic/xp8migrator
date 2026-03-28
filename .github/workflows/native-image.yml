@@ -39,6 +39,8 @@ jobs:
 
       - name: Build native image
         run: ./gradlew nativeCompile
+        env:
+          GRADLE_OPTS: -Djava.io.tmpdir=${{ runner.temp }}
 
       - name: Rename artifact (Linux)
         if: runner.os == 'Linux'
