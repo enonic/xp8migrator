@@ -14,10 +14,13 @@ permissions:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - os: ubuntu-latest
             artifact: migrator-linux-amd64
+          - os: ubuntu-24.04-arm
+            artifact: migrator-linux-arm64
           - os: macos-latest
             artifact: migrator-macos-arm64
           - os: windows-latest
