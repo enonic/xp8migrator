@@ -66,6 +66,13 @@ shadowJar {
     archiveClassifier.set( "" )
 }
 
+tasks.register('copyTestApp', Copy) {
+    from 'src/test/resources/myapp'
+    into layout.buildDirectory.dir('test-app/myapp')
+}
+
 test {
     useJUnitPlatform()
+    dependsOn copyTestApp
+    systemProperty 'testAppDir', layout.buildDirectory.dir('test-app/myapp').get().asFile.path
 }
