@@ -1,0 +1,73 @@
+name: Build Native Image
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact: migrator-linux-amd64
+          - os: macos-latest
+            artifact: migrator-macos-arm64
+          - os: windows-latest
+            artifact: migrator-windows-amd64.exe
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '25'
+          distribution: 'graalvm'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Build native image
+        run: ./gradlew nativeCompile
+
+      - name: Rename artifact (Linux)
+        if: runner.os == 'Linux'
+        run: mv build/native/nativeCompile/migrator build/native/nativeCompile/${{ matrix.artifact }}
+
+      - name: Rename artifact (macOS)
+        if: runner.os == 'macOS'
+        run: mv build/native/nativeCompile/migrator build/native/nativeCompile/${{ matrix.artifact }}
+
+      - name: Rename artifact (Windows)
+        if: runner.os == 'Windows'
+        run: mv build/native/nativeCompile/migrator.exe build/native/nativeCompile/${{ matrix.artifact }}
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact }}
+          path: build/native/nativeCompile/${{ matrix.artifact }}
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          generate_release_notes: true
+          files: artifacts/*
