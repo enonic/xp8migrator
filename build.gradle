@@ -1,11 +1,29 @@
 plugins {
-    id 'application'
-    id 'java'
-    id 'com.gradleup.shadow' version '9.3.1'
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.micronaut.application)
 }
 
-ext {
-    jacksonVersion = "2.19.2"
+micronaut {
+    version = libs.versions.micronaut.platform.get()
+    runtime("none")
+    processing {
+        incremental true
+        annotations 'com.enonic.xp.migrator.*'
+    }
+}
+
+graalvmNative {
+    toolchainDetection = false
+    binaries {
+        main {
+            imageName = 'migrator'
+            buildArgs.addAll(
+                '--initialize-at-build-time=ch.qos.logback',
+                '--initialize-at-build-time=org.slf4j',
+                '-H:+ReportExceptionStackTraces'
+            )
+        }
+    }
 }
 
 java {
@@ -15,18 +33,23 @@ java {
 }
 
 dependencies {
-    implementation "com.google.guava:guava:33.4.8-jre"
-    implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${jacksonVersion}"
-    implementation "org.slf4j:slf4j-api:2.0.17"
-    implementation "ch.qos.logback:logback-classic:1.5.28"
-    implementation "info.picocli:picocli:4.7.6"
+    annotationProcessor libs.picocli.codegen
+    annotationProcessor libs.micronaut.inject.java
 
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.11.4'
+    implementation libs.micronaut.picocli
+    implementation libs.micronaut.inject
+    implementation libs.guava
+    implementation libs.jackson.core
+    implementation libs.jackson.annotations
+    implementation libs.jackson.databind
+    implementation libs.jackson.dataformat.yaml
+    implementation libs.slf4j.api
+    implementation libs.logback.classic
 
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation libs.micronaut.test.junit5
+    testImplementation libs.junit.jupiter
+
+    testRuntimeOnly libs.junit.platform.launcher
 }
 
 repositories {
@@ -43,6 +66,13 @@ shadowJar {
     archiveClassifier.set( "" )
 }
 
+tasks.register('copyTestApp', Copy) {
+    from 'src/test/resources/myapp'
+    into layout.buildDirectory.dir('test-app/myapp')
+}
+
 test {
     useJUnitPlatform()
+    dependsOn copyTestApp
+    systemProperty 'testAppDir', layout.buildDirectory.dir('test-app/myapp').get().asFile.path
 }
