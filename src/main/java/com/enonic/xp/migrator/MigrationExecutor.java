@@ -111,8 +111,6 @@ public final class MigrationExecutor
     private void doPostMigration( final Path resourcesDir )
     {
         new StylesPostMigrator( resourcesDir ).migrate();
-        new MixinDirPostMigrator( resourcesDir ).migrate();
-        new XDataDirPostMigrator( resourcesDir ).migrate();
         new SiteDirPostMigrator( resourcesDir ).migrate();
         new WidgetsDirPostMigrator( resourcesDir ).migrate();
     }
