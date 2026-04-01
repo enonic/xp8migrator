@@ -1,7 +1,5 @@
 package com.enonic.xp.migrator;
 
-import java.io.IOException;
-import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -13,15 +11,8 @@ public record WidgetsDirPostMigrator(Path resourcesDir)
 
         if ( Files.exists( mixinDir ) )
         {
-            try
-            {
-                final Path formFragmentsDir = resourcesDir.resolve( "admin" ).resolve( "extensions" );
-                Files.move( mixinDir, formFragmentsDir );
-            }
-            catch ( IOException e )
-            {
-                throw new UncheckedIOException( e );
-            }
+            final Path formFragmentsDir = resourcesDir.resolve( "admin" ).resolve( "extensions" );
+            FileUtils.copyDirExcludingXml( mixinDir, formFragmentsDir );
         }
     }
 }

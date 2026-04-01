@@ -9,7 +9,6 @@ public record StylesPostMigrator(Path resourcesDir)
 {
     public void migrate()
     {
-        moveFile( "styles.xml" );
         moveFile( "image.yml" );
     }
 
