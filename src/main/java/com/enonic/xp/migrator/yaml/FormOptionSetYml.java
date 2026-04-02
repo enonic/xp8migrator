@@ -26,7 +26,7 @@ public class FormOptionSetYml
 
     public Occurrences occurrences;
 
-    @JsonProperty("selected")
+    @JsonProperty("selection")
     public Occurrences multiselection;
 
     public List<FormOptionSetOptionYml> options;
