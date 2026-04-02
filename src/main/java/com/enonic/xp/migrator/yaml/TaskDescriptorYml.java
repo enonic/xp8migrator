@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.enonic.xp.form.Form;
 import com.enonic.xp.task.TaskDescriptor;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "description", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class TaskDescriptorYml
 {
     public final String kind = "Task";

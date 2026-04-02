@@ -9,6 +9,9 @@ import com.enonic.xp.form.Input;
 import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.inputtype.InputTypeProperty;
 
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected
 public class ComboBoxYml
     extends InputYml<String>
 {

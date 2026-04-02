@@ -6,6 +6,9 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 
+import io.micronaut.core.annotation.Introspected;
+
+@Introspected
 public class OptionYml
 {
     private final Map<String, Object> attributes = new LinkedHashMap<>();

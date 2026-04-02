@@ -19,9 +19,12 @@ import com.enonic.xp.inputtype.InputTypeDefault;
 import com.enonic.xp.inputtype.InputTypeProperty;
 import com.enonic.xp.schema.LocalizedText;
 
+import io.micronaut.core.annotation.Introspected;
+
 import static com.enonic.xp.migrator.yaml.LocalizeHelper.localizeProperty;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class InputYml<T>
 {
     public String type;

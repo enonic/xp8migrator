@@ -8,8 +8,11 @@ import com.enonic.xp.form.FieldSet;
 import com.enonic.xp.form.FormItem;
 import com.enonic.xp.schema.LocalizedText;
 
+import io.micronaut.core.annotation.Introspected;
+
 import static com.enonic.xp.migrator.yaml.LocalizeHelper.localizeProperty;
 
+@Introspected
 public class FieldSetYml
     extends FormItemYml
 {

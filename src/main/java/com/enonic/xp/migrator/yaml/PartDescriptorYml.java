@@ -13,8 +13,11 @@ import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.region.PartDescriptor;
 import com.enonic.xp.schema.LocalizedText;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "form", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class PartDescriptorYml
 {
     public final String kind = "Part";

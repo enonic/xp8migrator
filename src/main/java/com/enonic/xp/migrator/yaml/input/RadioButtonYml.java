@@ -11,7 +11,10 @@ import com.enonic.xp.form.Input;
 import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.inputtype.InputTypeProperty;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class RadioButtonYml
     extends InputYml<String>
 {

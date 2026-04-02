@@ -14,8 +14,11 @@ import com.enonic.xp.page.PageDescriptor;
 import com.enonic.xp.region.RegionDescriptors;
 import com.enonic.xp.schema.LocalizedText;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "form", "regions", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class PageDescriptorYml
 {
     public final String kind = "Page";

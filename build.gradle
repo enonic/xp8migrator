@@ -20,7 +20,9 @@ graalvmNative {
             buildArgs.addAll(
                 '--initialize-at-build-time=ch.qos.logback',
                 '--initialize-at-build-time=org.slf4j',
-                '-H:+ReportExceptionStackTraces'
+                '-H:+ReportExceptionStackTraces',
+                '-Os',
+                '--gc=epsilon'
             )
         }
     }
@@ -64,6 +66,7 @@ shadowJar {
     archiveBaseName.set( "migrator" )
     archiveVersion.set( "" )
     archiveClassifier.set( "" )
+    minimize()
 }
 
 tasks.register('copyTestApp', Copy) {

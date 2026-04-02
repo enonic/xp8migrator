@@ -7,8 +7,11 @@ import com.enonic.xp.form.Form;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.schema.xdata.XData;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class XDataDescriptorYml
 {
     public final String kind = "Mixin";

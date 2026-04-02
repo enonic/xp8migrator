@@ -15,8 +15,11 @@ import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "allow", "apis", "interfaces"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class AdminToolDescriptorYml
 {
     public final String kind = "AdminTool";

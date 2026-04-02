@@ -7,8 +7,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.app.ApplicationDescriptor;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "url", "vendorName", "vendorUrl"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class ApplicationDescriptorYml
 {
     public final String kind = "Application";

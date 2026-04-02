@@ -14,8 +14,11 @@ import com.enonic.xp.region.LayoutDescriptor;
 import com.enonic.xp.region.RegionDescriptors;
 import com.enonic.xp.schema.LocalizedText;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "form", "regions", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class LayoutDescriptorYml
 {
     public final String kind = "Layout";

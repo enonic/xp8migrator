@@ -9,7 +9,10 @@ import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
 import com.enonic.xp.webapp.WebappDescriptor;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "apis"})
+@Introspected
 public class WebappDescriptorYml
 {
     public final String kind = "WebApp";

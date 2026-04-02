@@ -11,10 +11,13 @@ import com.enonic.xp.style.ElementStyle;
 import com.enonic.xp.style.ImageStyle;
 import com.enonic.xp.style.StyleDescriptor;
 
+import io.micronaut.core.annotation.Introspected;
+
 import static com.google.common.base.Strings.nullToEmpty;
 
 @JsonPropertyOrder({"kind", "css", "image"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class StyleDescriptorYml
 {
     public final String kind = "Style";
@@ -52,7 +55,9 @@ public class StyleDescriptorYml
         }
     }
 
+    @JsonPropertyOrder({"name", "displayName", "aspectRatio", "filter"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Introspected
     public static class Image
     {
         public String name;

@@ -11,8 +11,11 @@ import com.enonic.xp.api.ApiDescriptor;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "documentationUrl", "allow", "mount"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class ApiDescriptorYml
 {
     public final String kind = "API";

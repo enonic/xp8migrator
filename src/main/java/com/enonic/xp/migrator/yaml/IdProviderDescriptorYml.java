@@ -6,8 +6,11 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.enonic.xp.form.Form;
 import com.enonic.xp.idprovider.IdProviderDescriptor;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "mode", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class IdProviderDescriptorYml
 {
     public final String kind = "IdProvider";

@@ -5,7 +5,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.enonic.xp.form.Input;
 import com.enonic.xp.inputtype.InputTypeConfig;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class ContentTypeFilterYml
     extends InputYml<String>
 {

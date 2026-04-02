@@ -11,8 +11,11 @@ import com.enonic.xp.form.FormOptionSetOption;
 import com.enonic.xp.form.Occurrences;
 import com.enonic.xp.schema.LocalizedText;
 
+import io.micronaut.core.annotation.Introspected;
+
 import static com.enonic.xp.migrator.yaml.LocalizeHelper.localizeProperty;
 
+@Introspected
 public class FormOptionSetYml
     extends FormItemYml
 {

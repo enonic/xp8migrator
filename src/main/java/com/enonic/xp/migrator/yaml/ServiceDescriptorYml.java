@@ -10,8 +10,11 @@ import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 import com.enonic.xp.service.ServiceDescriptor;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "allow"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class ServiceDescriptorYml
 {
     public final String kind = "Service";

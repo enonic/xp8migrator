@@ -7,8 +7,11 @@ import com.enonic.xp.form.Form;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.schema.mixin.Mixin;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "title", "description", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class MixinDescriptorYml
 {
     public final String kind = "FormFragment";

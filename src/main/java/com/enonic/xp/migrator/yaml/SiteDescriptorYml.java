@@ -14,8 +14,11 @@ import com.enonic.xp.site.SiteDescriptor;
 import com.enonic.xp.site.mapping.ControllerMappingDescriptors;
 import com.enonic.xp.site.processor.ResponseProcessorDescriptors;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonPropertyOrder({"kind", "processors", "mappings", "apis"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class SiteDescriptorYml
 {
     public final String kind = "Site";
@@ -86,7 +89,9 @@ public class SiteDescriptorYml
         }
     }
 
+    @JsonPropertyOrder({"name", "order"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Introspected
     public static class Processor
     {
         public String name;
@@ -94,7 +99,9 @@ public class SiteDescriptorYml
         public Integer order;
     }
 
+    @JsonPropertyOrder({"controller", "filter", "service", "order", "match", "pattern", "invertPattern"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Introspected
     public static class Mapping
     {
         public String filter;

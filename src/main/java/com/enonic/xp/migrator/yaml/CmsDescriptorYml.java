@@ -10,10 +10,13 @@ import com.enonic.xp.form.Form;
 import com.enonic.xp.site.SiteDescriptor;
 import com.enonic.xp.site.XDataMappings;
 
+import io.micronaut.core.annotation.Introspected;
+
 import static com.google.common.base.Strings.nullToEmpty;
 
 @JsonPropertyOrder({"kind", "mixin", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class CmsDescriptorYml
 {
     public final String kind = "CMS";
@@ -45,7 +48,9 @@ public class CmsDescriptorYml
         }
     }
 
+    @JsonPropertyOrder({"name", "allowContentTypes", "optional"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
+    @Introspected
     public static class XData
     {
         public String name;

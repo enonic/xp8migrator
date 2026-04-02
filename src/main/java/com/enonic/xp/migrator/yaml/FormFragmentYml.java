@@ -4,7 +4,10 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import com.enonic.xp.form.InlineMixin;
 
+import io.micronaut.core.annotation.Introspected;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Introspected
 public class FormFragmentYml
     extends FormItemYml
 {
