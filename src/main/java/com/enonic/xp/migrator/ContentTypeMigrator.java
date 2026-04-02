@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.migrator.yml.ContentTypeYml;
+import com.enonic.xp.migrator.yaml.ContentTypeYml;
 import com.enonic.xp.schema.content.ContentType;
 import com.enonic.xp.schema.content.ContentTypeName;
 import com.enonic.xp.xml.parser.XmlContentTypeParser;

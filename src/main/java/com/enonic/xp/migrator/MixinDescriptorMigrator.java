@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.migrator.yml.MixinDescriptorYml;
+import com.enonic.xp.migrator.yaml.MixinDescriptorYml;
 import com.enonic.xp.schema.mixin.Mixin;
 import com.enonic.xp.schema.mixin.MixinName;
 import com.enonic.xp.xml.parser.XmlMixinParser;

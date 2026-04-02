@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.idprovider.IdProviderDescriptor;
-import com.enonic.xp.migrator.yml.IdProviderDescriptorYml;
+import com.enonic.xp.migrator.yaml.IdProviderDescriptorYml;
 import com.enonic.xp.xml.parser.XmlIdProviderDescriptorParser;
 
 public class IdProviderDescriptorMigrator

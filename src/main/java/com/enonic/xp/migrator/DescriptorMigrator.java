@@ -13,10 +13,10 @@ import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.form.Form;
 import com.enonic.xp.form.FormItem;
 import com.enonic.xp.form.Occurrences;
-import com.enonic.xp.migrator.yml.mixin.FormItemSerializer;
-import com.enonic.xp.migrator.yml.mixin.FormSerializer;
-import com.enonic.xp.migrator.yml.mixin.LocalizedTextSerializer;
-import com.enonic.xp.migrator.yml.mixin.OccurrencesSerializer;
+import com.enonic.xp.migrator.yaml.mixin.FormItemSerializer;
+import com.enonic.xp.migrator.yaml.mixin.FormSerializer;
+import com.enonic.xp.migrator.yaml.mixin.LocalizedTextSerializer;
+import com.enonic.xp.migrator.yaml.mixin.OccurrencesSerializer;
 import com.enonic.xp.schema.LocalizedText;
 
 public abstract class DescriptorMigrator
@@ -69,6 +69,6 @@ public abstract class DescriptorMigrator
     public Path resolveYmlFilePath( final Path source )
         throws IOException
     {
-        return source.getParent().resolve( source.getFileName().toString().replace( ".xml", ".yml" ) );
+        return source.getParent().resolve( source.getFileName().toString().replace( ".xml", ".yaml" ) );
     }
 }

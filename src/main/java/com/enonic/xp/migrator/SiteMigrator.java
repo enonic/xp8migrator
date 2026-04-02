@@ -6,8 +6,8 @@ import java.nio.file.Path;
 import java.util.stream.Collectors;
 
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.migrator.yml.CmsDescriptorYml;
-import com.enonic.xp.migrator.yml.SiteDescriptorYml;
+import com.enonic.xp.migrator.yaml.CmsDescriptorYml;
+import com.enonic.xp.migrator.yaml.SiteDescriptorYml;
 import com.enonic.xp.resource.ResourceKey;
 import com.enonic.xp.site.SiteDescriptor;
 import com.enonic.xp.site.mapping.ControllerMappingDescriptor;
@@ -39,7 +39,7 @@ public class SiteMigrator
 
         final SiteDescriptor siteDescriptor = builder.build();
 
-        final Path cmsPath = resourcesDir.resolve( "site" ).resolve( "cms.yml" );
+        final Path cmsPath = resourcesDir.resolve( "site" ).resolve( "cms.yaml" );
         new CmsMigrator( siteDescriptor, new MigrationParams( currentApplication, resourcesDir, cmsPath ) ).migrate();
 
         final ControllerMappingDescriptors modifiedMappings = ControllerMappingDescriptors.from(

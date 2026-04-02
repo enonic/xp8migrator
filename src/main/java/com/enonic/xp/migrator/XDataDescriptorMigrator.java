@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.migrator.yml.XDataDescriptorYml;
+import com.enonic.xp.migrator.yaml.XDataDescriptorYml;
 import com.enonic.xp.schema.xdata.XData;
 import com.enonic.xp.schema.xdata.XDataName;
 import com.enonic.xp.xml.parser.XmlXDataParser;

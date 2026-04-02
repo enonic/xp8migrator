@@ -8,7 +8,7 @@ import com.enonic.xp.admin.widget.WidgetDescriptor;
 import com.enonic.xp.admin.widget.XmlWidgetDescriptorParser;
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
-import com.enonic.xp.migrator.yml.WidgetDescriptorYml;
+import com.enonic.xp.migrator.yaml.WidgetDescriptorYml;
 
 public class WidgetDescriptorMigrator
     extends DescriptorMigrator

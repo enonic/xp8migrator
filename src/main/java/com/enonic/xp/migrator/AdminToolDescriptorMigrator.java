@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import com.enonic.xp.admin.tool.AdminToolDescriptor;
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
-import com.enonic.xp.migrator.yml.AdminToolDescriptorYml;
+import com.enonic.xp.migrator.yaml.AdminToolDescriptorYml;
 import com.enonic.xp.xml.parser.XmlAdminToolDescriptorParser;
 
 public class AdminToolDescriptorMigrator

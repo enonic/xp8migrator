@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationDescriptor;
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.migrator.yml.ApplicationDescriptorYml;
+import com.enonic.xp.migrator.yaml.ApplicationDescriptorYml;
 import com.enonic.xp.xml.parser.XmlApplicationParser;
 
 public class ApplicationMigrator

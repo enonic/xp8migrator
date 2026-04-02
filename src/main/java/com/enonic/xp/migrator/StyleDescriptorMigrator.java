@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.migrator.yml.StyleDescriptorYml;
+import com.enonic.xp.migrator.yaml.StyleDescriptorYml;
 import com.enonic.xp.style.StyleDescriptor;
 import com.enonic.xp.xml.parser.XmlStyleDescriptorParser;
 
@@ -37,6 +37,6 @@ public class StyleDescriptorMigrator
     @Override
     public Path resolveYmlFilePath( final Path source )
     {
-        return resourcesDir.resolve( "site" ).resolve( "image.yml" );
+        return resourcesDir.resolve( "site" ).resolve( "image.yaml" );
     }
 }

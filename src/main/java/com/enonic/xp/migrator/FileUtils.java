@@ -38,7 +38,7 @@ final class FileUtils
                     {
                         Files.createDirectories( targetPath.getParent() );
                         Files.copy( sourcePath, targetPath );
-                        if ( sourcePath.toString().endsWith( ".yml" ) )
+                        if ( sourcePath.toString().endsWith( ".yaml" ) )
                         {
                             Files.delete( sourcePath );
                         }

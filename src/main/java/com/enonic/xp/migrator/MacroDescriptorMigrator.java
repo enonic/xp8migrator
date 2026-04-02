@@ -7,7 +7,7 @@ import java.nio.file.Path;
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.macro.MacroDescriptor;
 import com.enonic.xp.macro.MacroKey;
-import com.enonic.xp.migrator.yml.MacroDescriptorYml;
+import com.enonic.xp.migrator.yaml.MacroDescriptorYml;
 import com.enonic.xp.xml.parser.XmlMacroDescriptorParser;
 
 public class MacroDescriptorMigrator

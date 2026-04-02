@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.migrator.yml.WebappDescriptorYml;
+import com.enonic.xp.migrator.yaml.WebappDescriptorYml;
 import com.enonic.xp.webapp.WebappDescriptor;
 import com.enonic.xp.xml.parser.XmlWebappDescriptorParser;
 

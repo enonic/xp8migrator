@@ -6,7 +6,7 @@ import java.nio.file.Path;
 
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
-import com.enonic.xp.migrator.yml.PageDescriptorYml;
+import com.enonic.xp.migrator.yaml.PageDescriptorYml;
 import com.enonic.xp.page.PageDescriptor;
 import com.enonic.xp.xml.parser.XmlPageDescriptorParser;
 
