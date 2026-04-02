@@ -12,6 +12,8 @@ import com.enonic.xp.service.ServiceDescriptor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ServiceDescriptorYml
 {
+    public final String kind = "Service";
+
     public List<String> allow;
 
     public ServiceDescriptorYml( final ServiceDescriptor descriptor )

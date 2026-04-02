@@ -9,6 +9,8 @@ import com.enonic.xp.schema.LocalizedText;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MacroDescriptorYml
 {
+    public final String kind = "Macro";
+
     public LocalizedText displayName;
 
     public LocalizedText description;

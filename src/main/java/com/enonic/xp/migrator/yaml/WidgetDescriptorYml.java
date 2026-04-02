@@ -15,6 +15,8 @@ import com.enonic.xp.security.PrincipalKeys;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WidgetDescriptorYml
 {
+    public final String kind = "AdminExtension";
+
     public LocalizedText displayName;
 
     public LocalizedText description;

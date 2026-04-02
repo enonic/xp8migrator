@@ -15,6 +15,8 @@ import static com.google.common.base.Strings.nullToEmpty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StyleDescriptorYml
 {
+    public final String kind = "Style";
+
     public String css;
 
     public List<Image> image;

@@ -13,6 +13,8 @@ import com.enonic.xp.security.PrincipalKeys;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiDescriptorYml
 {
+    public final String kind = "API";
+
     public List<String> allow;
 
     public String displayName;

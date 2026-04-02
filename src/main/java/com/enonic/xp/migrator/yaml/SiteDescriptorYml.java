@@ -16,6 +16,8 @@ import com.enonic.xp.site.processor.ResponseProcessorDescriptors;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SiteDescriptorYml
 {
+    public final String kind = "Site";
+
     public List<Processor> processors;
 
     public List<Mapping> mappings;

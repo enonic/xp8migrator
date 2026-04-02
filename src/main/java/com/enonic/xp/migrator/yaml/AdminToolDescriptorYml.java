@@ -17,6 +17,8 @@ import com.enonic.xp.security.PrincipalKeys;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdminToolDescriptorYml
 {
+    public final String kind = "AdminTool";
+
     public LocalizedText displayName;
 
     public LocalizedText description;

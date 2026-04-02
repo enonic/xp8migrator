@@ -9,6 +9,8 @@ import com.enonic.xp.webapp.WebappDescriptor;
 
 public class WebappDescriptorYml
 {
+    public final String kind = "WebApp";
+
     public List<String> apis;
 
     public WebappDescriptorYml( final ApplicationKey currentApplication, final WebappDescriptor descriptor )

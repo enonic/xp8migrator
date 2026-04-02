@@ -16,6 +16,8 @@ import com.enonic.xp.schema.LocalizedText;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LayoutDescriptorYml
 {
+    public final String kind = "Layout";
+
     public LocalizedText displayName;
 
     public LocalizedText description;

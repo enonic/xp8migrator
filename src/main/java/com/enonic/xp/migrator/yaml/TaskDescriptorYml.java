@@ -8,6 +8,8 @@ import com.enonic.xp.task.TaskDescriptor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class TaskDescriptorYml
 {
+    public final String kind = "Task";
+
     public String description;
 
     public Form form;

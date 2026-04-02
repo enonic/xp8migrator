@@ -14,6 +14,8 @@ import static com.google.common.base.Strings.nullToEmpty;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CmsDescriptorYml
 {
+    public final String kind = "CMS";
+
     public List<XData> mixin;
 
     public Form form;

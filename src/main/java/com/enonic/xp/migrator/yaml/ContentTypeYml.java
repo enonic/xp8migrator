@@ -13,10 +13,12 @@ import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.schema.content.ContentType;
 
-@JsonPropertyOrder({"superType", "abstract", "final", "allowChildContent", "displayName", "description", "form", "config"})
+@JsonPropertyOrder({"kind", "superType", "abstract", "final", "allowChildContent", "displayName", "description", "form", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContentTypeYml
 {
+    public final String kind = "ContentType";
+
     public String superType;
 
     @JsonProperty("abstract")

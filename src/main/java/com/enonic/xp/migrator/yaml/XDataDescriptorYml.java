@@ -9,6 +9,8 @@ import com.enonic.xp.schema.xdata.XData;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class XDataDescriptorYml
 {
+    public final String kind = "Mixin";
+
     public LocalizedText displayName;
 
     public LocalizedText description;

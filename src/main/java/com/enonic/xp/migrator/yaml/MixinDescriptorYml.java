@@ -9,6 +9,8 @@ import com.enonic.xp.schema.mixin.Mixin;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MixinDescriptorYml
 {
+    public final String kind = "FormFragment";
+
     public LocalizedText displayName;
 
     public LocalizedText description;

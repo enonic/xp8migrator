@@ -8,6 +8,8 @@ import com.enonic.xp.idprovider.IdProviderDescriptor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IdProviderDescriptorYml
 {
+    public final String kind = "IdProvider";
+
     public String mode;
 
     public Form form;

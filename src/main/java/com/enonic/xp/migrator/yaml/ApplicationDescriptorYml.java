@@ -4,6 +4,8 @@ import com.enonic.xp.app.ApplicationDescriptor;
 
 public class ApplicationDescriptorYml
 {
+    public final String kind = "Application";
+
     public String description;
 
     public ApplicationDescriptorYml( final ApplicationDescriptor source )
