@@ -13,7 +13,8 @@ import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.schema.content.ContentType;
 
-@JsonPropertyOrder({"kind", "superType", "abstract", "final", "allowChildContent", "displayName", "description", "form", "config"})
+@JsonPropertyOrder({"kind", "superType", "abstract", "final", "allowChildContent", "title", "description", "displayNamePlaceholder",
+    "displayNameExpression", "displayNameListExpression", "form", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContentTypeYml
 {
@@ -29,11 +30,17 @@ public class ContentTypeYml
 
     public Boolean allowChildContent;
 
-    public LocalizedText displayName;
+    public LocalizedText title;
 
     public LocalizedText description;
 
     public List<String> allowChildContentType;
+
+    public LocalizedText displayNamePlaceholder;
+
+    public String displayNameExpression;
+
+    public String displayNameListExpression;
 
     public Map<String, Object> config;
 
@@ -42,7 +49,7 @@ public class ContentTypeYml
     public ContentTypeYml( final ContentType descriptor )
     {
         superType = descriptor.getSuperType().toString();
-        displayName = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
+        title = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
         description = LocalizeHelper.localizeProperty( descriptor.getDescription(), descriptor.getDescriptionI18nKey() );
         abstractValue = descriptor.isAbstract();
         finalValue = descriptor.isFinal();
@@ -55,26 +62,25 @@ public class ContentTypeYml
             allowChildContentType = allowChildContentTypes;
         }
 
-        final LocalizedText displayNamePlaceholder =
+        displayNamePlaceholder =
             LocalizeHelper.localizeProperty( descriptor.getDisplayNameLabel(), descriptor.getDisplayNameLabelI18nKey() );
 
-        if ( displayNamePlaceholder != null )
-        {
-            config = new LinkedHashMap<>();
-            config.put( "displayNamePlaceholder", displayNamePlaceholder );
-        }
-
-        if ( descriptor.getDisplayNameExpression() != null )
-        {
-            config = config != null ? config : new LinkedHashMap<>();
-            config.put( "displayNameExpression", descriptor.getDisplayNameExpression() );
-        }
+        displayNameExpression = descriptor.getDisplayNameExpression();
 
         final InputTypeConfig schemaConfig = descriptor.getSchemaConfig();
         if ( schemaConfig != null && schemaConfig.getSize() > 0 )
         {
-            config = config != null ? config : new LinkedHashMap<>();
-            schemaConfig.iterator().forEachRemaining( property -> config.put( property.getName(), property.getValue() ) );
+            schemaConfig.iterator().forEachRemaining( property -> {
+                if ( "listTitleExpression".equals( property.getName() ) )
+                {
+                    displayNameListExpression = property.getValue();
+                }
+                else
+                {
+                    config = config != null ? config : new LinkedHashMap<>();
+                    config.put( property.getName(), property.getValue() );
+                }
+            } );
         }
     }
 }

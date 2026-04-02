@@ -6,18 +6,20 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.form.Form;
 import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.region.PartDescriptor;
 import com.enonic.xp.schema.LocalizedText;
 
+@JsonPropertyOrder({"kind", "title", "description", "form", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class PartDescriptorYml
 {
     public final String kind = "Part";
 
-    public LocalizedText displayName;
+    public LocalizedText title;
 
     public LocalizedText description;
 
@@ -27,7 +29,7 @@ public class PartDescriptorYml
 
     public PartDescriptorYml( final PartDescriptor source )
     {
-        this.displayName = LocalizeHelper.localizeProperty( source.getDisplayName(), source.getDisplayNameI18nKey() );
+        this.title = LocalizeHelper.localizeProperty( source.getDisplayName(), source.getDisplayNameI18nKey() );
         this.description = LocalizeHelper.localizeProperty( source.getDescription(), source.getDescriptionI18nKey() );
         this.form = source.getConfig();
 

@@ -3,10 +3,13 @@ package com.enonic.xp.migrator.yaml;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
 import com.enonic.xp.webapp.WebappDescriptor;
 
+@JsonPropertyOrder({"kind", "apis"})
 public class WebappDescriptorYml
 {
     public final String kind = "WebApp";

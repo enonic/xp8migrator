@@ -1,10 +1,12 @@
 package com.enonic.xp.migrator.yaml;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.form.Form;
 import com.enonic.xp.idprovider.IdProviderDescriptor;
 
+@JsonPropertyOrder({"kind", "mode", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class IdProviderDescriptorYml
 {

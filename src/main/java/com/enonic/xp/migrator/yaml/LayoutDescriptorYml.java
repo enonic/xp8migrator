@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.form.Form;
 import com.enonic.xp.inputtype.InputTypeConfig;
@@ -13,12 +14,13 @@ import com.enonic.xp.region.LayoutDescriptor;
 import com.enonic.xp.region.RegionDescriptors;
 import com.enonic.xp.schema.LocalizedText;
 
+@JsonPropertyOrder({"kind", "title", "description", "form", "regions", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class LayoutDescriptorYml
 {
     public final String kind = "Layout";
 
-    public LocalizedText displayName;
+    public LocalizedText title;
 
     public LocalizedText description;
 
@@ -30,7 +32,7 @@ public class LayoutDescriptorYml
 
     public LayoutDescriptorYml( final LayoutDescriptor descriptor )
     {
-        displayName = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
+        title = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
         description = LocalizeHelper.localizeProperty( descriptor.getDescription(), descriptor.getDescriptionI18nKey() );
         form = descriptor.getConfig();
 

@@ -6,18 +6,20 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.admin.widget.WidgetDescriptor;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
+@JsonPropertyOrder({"kind", "title", "description", "allow", "interfaces", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WidgetDescriptorYml
 {
     public final String kind = "AdminExtension";
 
-    public LocalizedText displayName;
+    public LocalizedText title;
 
     public LocalizedText description;
 
@@ -29,7 +31,7 @@ public class WidgetDescriptorYml
 
     public WidgetDescriptorYml( final WidgetDescriptor descriptor )
     {
-        displayName = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
+        title = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
         description = LocalizeHelper.localizeProperty( descriptor.getDescription(), descriptor.getDescriptionI18nKey() );
 
         final PrincipalKeys allowedPrincipals = descriptor.getAllowedPrincipals();

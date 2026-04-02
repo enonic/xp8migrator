@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.form.Form;
 import com.enonic.xp.site.SiteDescriptor;
@@ -11,6 +12,7 @@ import com.enonic.xp.site.XDataMappings;
 
 import static com.google.common.base.Strings.nullToEmpty;
 
+@JsonPropertyOrder({"kind", "mixin", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CmsDescriptorYml
 {

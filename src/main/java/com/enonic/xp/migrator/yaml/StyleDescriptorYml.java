@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.style.ElementStyle;
@@ -12,6 +13,7 @@ import com.enonic.xp.style.StyleDescriptor;
 
 import static com.google.common.base.Strings.nullToEmpty;
 
+@JsonPropertyOrder({"kind", "css", "image"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StyleDescriptorYml
 {

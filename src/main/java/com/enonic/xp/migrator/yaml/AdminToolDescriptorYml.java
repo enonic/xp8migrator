@@ -5,6 +5,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.admin.tool.AdminToolDescriptor;
 import com.enonic.xp.app.ApplicationKey;
@@ -14,12 +15,13 @@ import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
+@JsonPropertyOrder({"kind", "title", "description", "allow", "apis", "interfaces"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdminToolDescriptorYml
 {
     public final String kind = "AdminTool";
 
-    public LocalizedText displayName;
+    public LocalizedText title;
 
     public LocalizedText description;
 
@@ -31,7 +33,7 @@ public class AdminToolDescriptorYml
 
     public AdminToolDescriptorYml( final ApplicationKey currentApplication, final AdminToolDescriptor descriptor )
     {
-        displayName = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
+        title = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
         description = LocalizeHelper.localizeProperty( descriptor.getDescription(), descriptor.getDescriptionI18nKey() );
 
         final PrincipalKeys allowedPrincipals = descriptor.getAllowedPrincipals();

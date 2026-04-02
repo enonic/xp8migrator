@@ -5,11 +5,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.api.ApiDescriptor;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
+@JsonPropertyOrder({"kind", "title", "description", "documentationUrl", "allow", "mount"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ApiDescriptorYml
 {
@@ -17,7 +19,7 @@ public class ApiDescriptorYml
 
     public List<String> allow;
 
-    public String displayName;
+    public String title;
 
     public String description;
 
@@ -32,7 +34,7 @@ public class ApiDescriptorYml
         {
             allow = allowedPrincipals.stream().map( PrincipalKey::toString ).collect( Collectors.toList() );
         }
-        displayName = descriptor.getDisplayName();
+        title = descriptor.getDisplayName();
         description = descriptor.getDescription();
         documentationUrl = descriptor.getDocumentationUrl();
         mount = descriptor.isMount() ? Set.of( "xp" ) : Set.of();

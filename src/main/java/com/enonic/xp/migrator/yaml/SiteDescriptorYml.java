@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
@@ -13,6 +14,7 @@ import com.enonic.xp.site.SiteDescriptor;
 import com.enonic.xp.site.mapping.ControllerMappingDescriptors;
 import com.enonic.xp.site.processor.ResponseProcessorDescriptors;
 
+@JsonPropertyOrder({"kind", "processors", "mappings", "apis"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SiteDescriptorYml
 {
