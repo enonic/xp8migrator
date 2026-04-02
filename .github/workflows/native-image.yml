@@ -18,13 +18,13 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            artifact: migrator-linux-amd64
+            artifact: migrator-linux-x86_64.tar.gz
           - os: ubuntu-24.04-arm
-            artifact: migrator-linux-arm64
+            artifact: migrator-linux-aarch64.tar.gz
           - os: macos-latest
-            artifact: migrator-macos-arm64
+            artifact: migrator-darwin-arm64.tar.gz
           - os: windows-latest
-            artifact: migrator-windows-amd64.exe
+            artifact: migrator-windows.zip
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v6
@@ -42,17 +42,13 @@ jobs:
         env:
           GRADLE_OPTS: -Djava.io.tmpdir=${{ runner.temp }}
 
-      - name: Rename artifact (Linux)
-        if: runner.os == 'Linux'
-        run: mv build/native/nativeCompile/migrator build/native/nativeCompile/${{ matrix.artifact }}
+      - name: Package artifact (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: tar -czf build/native/nativeCompile/${{ matrix.artifact }} -C build/native/nativeCompile migrator
 
-      - name: Rename artifact (macOS)
-        if: runner.os == 'macOS'
-        run: mv build/native/nativeCompile/migrator build/native/nativeCompile/${{ matrix.artifact }}
-
-      - name: Rename artifact (Windows)
+      - name: Package artifact (Windows)
         if: runner.os == 'Windows'
-        run: mv build/native/nativeCompile/migrator.exe build/native/nativeCompile/${{ matrix.artifact }}
+        run: Compress-Archive -Path build/native/nativeCompile/migrator.exe -DestinationPath build/native/nativeCompile/${{ matrix.artifact }}
 
       - name: Upload artifact
         uses: actions/upload-artifact@v7

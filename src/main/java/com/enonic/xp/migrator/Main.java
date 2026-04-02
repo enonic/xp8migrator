@@ -6,6 +6,7 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.concurrent.Callable;
 
 import io.micronaut.configuration.picocli.PicocliRunner;
@@ -19,10 +20,10 @@ import com.enonic.xp.app.ApplicationKey;
 public class Main
     implements Callable<Integer>
 {
-    @Parameters( index = "0", description = "Path to the project directory." )
+    @Parameters( index = "0", arity = "0..1", defaultValue = ".", description = "Path to the project directory. Defaults to current directory." )
     private Path projectPath;
 
-    @Parameters( index = "1", arity = "0..1", description = "Application name. Resolved from gradle.properties if not provided." )
+    @Option( names = {"-a", "--app-name"}, description = "Application name. Resolved from gradle.properties if not provided." )
     private String appName;
 
     @Option( names = {"-x", "--delete-migrated-xml"}, description = "Delete original XML files after successful migration." )
@@ -31,7 +32,7 @@ public class Main
     @Override
     public Integer call()
     {
-        final ApplicationKey currentApplication = appName != null ? ApplicationKey.from( appName ) : resolveApplicationKey( projectPath );
+        final ApplicationKey currentApplication = resolveApplicationKey();
 
         System.out.printf( "Start the migration of all descriptors for the project: %s%n", projectPath );
         System.out.printf( "Resolved applicationKey: %s%n", currentApplication );
@@ -65,36 +66,44 @@ public class Main
         } );
     }
 
-    private static ApplicationKey resolveApplicationKey( final Path projectPath )
+    private ApplicationKey resolveApplicationKey()
     {
-        final Path gradlePropertiesPath = projectPath.resolve( "gradle.properties" );
-        if ( Files.notExists( gradlePropertiesPath ) )
+        if ( appName != null )
         {
-            System.err.println( "File gradle.properties not found." );
-            System.exit( 1 );
-        }
-
-        final Properties props = new Properties();
-        try (FileInputStream fis = new FileInputStream( gradlePropertiesPath.toFile() ))
-        {
-            props.load( fis );
-
-            final String appName = props.getProperty( "appName" );
-            if ( appName == null || appName.isEmpty() )
-            {
-                System.err.println( "Missed the \"appName\" property in the gradle.properties file." );
-                System.exit( 1 );
-            }
-
             return ApplicationKey.from( appName );
         }
-        catch ( IOException e )
+
+        final Path gradlePropertiesPath = projectPath.resolve( "gradle.properties" );
+        if ( Files.exists( gradlePropertiesPath ) )
         {
-            throw new UncheckedIOException( "Failed to read the gradle.properties file", e );
+            final Properties props = new Properties();
+            try (FileInputStream fis = new FileInputStream( gradlePropertiesPath.toFile() ))
+            {
+                props.load( fis );
+                final String name = props.getProperty( "appName" );
+                if ( name != null && !name.isEmpty() )
+                {
+                    return ApplicationKey.from( name );
+                }
+            }
+            catch ( IOException e )
+            {
+                throw new UncheckedIOException( "Failed to read the gradle.properties file", e );
+            }
         }
+
+        System.out.print( "App name not found. Enter app name: " );
+        final Scanner scanner = new Scanner( System.in );
+        final String name = scanner.nextLine().trim();
+        if ( name.isEmpty() )
+        {
+            System.err.println( "App name is required." );
+            System.exit( 1 );
+        }
+        return ApplicationKey.from( name );
     }
 
-    public static void main( String[] args )
+    static void main( String[] args )
     {
         PicocliRunner.execute( Main.class, args );
     }
