@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
 import com.enonic.xp.descriptor.DescriptorKeys;
@@ -14,11 +16,9 @@ import com.enonic.xp.site.SiteDescriptor;
 import com.enonic.xp.site.mapping.ControllerMappingDescriptors;
 import com.enonic.xp.site.processor.ResponseProcessorDescriptors;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "processors", "mappings", "apis"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class SiteDescriptorYml
 {
     public final String kind = "Site";
@@ -84,14 +84,16 @@ public class SiteDescriptorYml
         if ( apiMounts != null && apiMounts.isNotEmpty() )
         {
             final String prefix = currentApplication + ":";
-            apis = apiMounts.stream().map( DescriptorKey::toString ).map(
-                api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api ).collect( Collectors.toList() );
+            apis = apiMounts.stream()
+                .map( DescriptorKey::toString )
+                .map( api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api )
+                .collect( Collectors.toList() );
         }
     }
 
+    @ReflectiveAccess
     @JsonPropertyOrder({"name", "order"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Introspected
     public static class Processor
     {
         public String name;
@@ -99,9 +101,9 @@ public class SiteDescriptorYml
         public Integer order;
     }
 
+    @ReflectiveAccess
     @JsonPropertyOrder({"controller", "filter", "service", "order", "match", "pattern", "invertPattern"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Introspected
     public static class Mapping
     {
         public String filter;

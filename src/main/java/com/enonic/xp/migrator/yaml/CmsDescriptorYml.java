@@ -6,17 +6,17 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.Form;
 import com.enonic.xp.site.SiteDescriptor;
 import com.enonic.xp.site.XDataMappings;
 
-import io.micronaut.core.annotation.Introspected;
-
 import static com.google.common.base.Strings.nullToEmpty;
 
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "mixin", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class CmsDescriptorYml
 {
     public final String kind = "CMS";
@@ -48,9 +48,9 @@ public class CmsDescriptorYml
         }
     }
 
+    @ReflectiveAccess
     @JsonPropertyOrder({"name", "allowContentTypes", "optional"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Introspected
     public static class XData
     {
         public String name;

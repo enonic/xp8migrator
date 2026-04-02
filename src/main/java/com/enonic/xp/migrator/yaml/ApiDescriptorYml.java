@@ -7,15 +7,15 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.api.ApiDescriptor;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "title", "description", "documentationUrl", "allow", "mount"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class ApiDescriptorYml
 {
     public final String kind = "API";

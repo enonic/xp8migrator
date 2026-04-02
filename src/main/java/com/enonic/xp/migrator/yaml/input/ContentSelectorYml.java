@@ -6,14 +6,14 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.Input;
 import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.inputtype.InputTypeProperty;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class ContentSelectorYml
     extends InputYml<String>
 {

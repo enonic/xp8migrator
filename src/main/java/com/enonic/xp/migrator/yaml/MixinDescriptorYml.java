@@ -3,15 +3,15 @@ package com.enonic.xp.migrator.yaml;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.Form;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.schema.mixin.Mixin;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "title", "description", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class MixinDescriptorYml
 {
     public final String kind = "FormFragment";

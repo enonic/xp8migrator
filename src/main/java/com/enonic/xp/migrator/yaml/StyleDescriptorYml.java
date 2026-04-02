@@ -6,18 +6,18 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.style.ElementStyle;
 import com.enonic.xp.style.ImageStyle;
 import com.enonic.xp.style.StyleDescriptor;
 
-import io.micronaut.core.annotation.Introspected;
-
 import static com.google.common.base.Strings.nullToEmpty;
 
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "css", "image"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class StyleDescriptorYml
 {
     public final String kind = "Style";
@@ -25,7 +25,6 @@ public class StyleDescriptorYml
     public String css;
 
     public List<Image> image;
-
 
     public StyleDescriptorYml( final StyleDescriptor styleDescriptor )
     {
@@ -55,9 +54,9 @@ public class StyleDescriptorYml
         }
     }
 
+    @ReflectiveAccess
     @JsonPropertyOrder({"name", "displayName", "aspectRatio", "filter"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    @Introspected
     public static class Image
     {
         public String name;

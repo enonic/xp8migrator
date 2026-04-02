@@ -8,17 +8,17 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.Form;
 import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.schema.content.ContentType;
 
-import io.micronaut.core.annotation.Introspected;
-
 @JsonPropertyOrder({"kind", "superType", "abstract", "final", "allowChildContent", "title", "description", "displayNamePlaceholder",
     "displayNameExpression", "displayNameListExpression", "form", "config"})
+@ReflectiveAccess
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class ContentTypeYml
 {
     public final String kind = "ContentType";

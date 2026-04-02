@@ -5,14 +5,14 @@ import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
 import com.enonic.xp.webapp.WebappDescriptor;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "apis"})
-@Introspected
 public class WebappDescriptorYml
 {
     public final String kind = "WebApp";
@@ -24,8 +24,11 @@ public class WebappDescriptorYml
         if ( descriptor.getApiMounts() != null && !descriptor.getApiMounts().isEmpty() )
         {
             final String prefix = currentApplication + ":";
-            apis = descriptor.getApiMounts().stream().map( DescriptorKey::toString ).map(
-                api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api ).collect( Collectors.toList() );
+            apis = descriptor.getApiMounts()
+                .stream()
+                .map( DescriptorKey::toString )
+                .map( api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api )
+                .collect( Collectors.toList() );
         }
     }
 }

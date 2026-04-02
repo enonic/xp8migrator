@@ -8,17 +8,17 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.Form;
 import com.enonic.xp.inputtype.InputTypeConfig;
 import com.enonic.xp.region.LayoutDescriptor;
 import com.enonic.xp.region.RegionDescriptors;
 import com.enonic.xp.schema.LocalizedText;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "title", "description", "form", "regions", "config"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class LayoutDescriptorYml
 {
     public final String kind = "Layout";

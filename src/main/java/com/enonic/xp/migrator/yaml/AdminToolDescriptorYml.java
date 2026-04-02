@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.admin.tool.AdminToolDescriptor;
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
@@ -15,11 +17,9 @@ import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "title", "description", "allow", "apis", "interfaces"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class AdminToolDescriptorYml
 {
     public final String kind = "AdminTool";
@@ -49,8 +49,10 @@ public class AdminToolDescriptorYml
         if ( apiMounts != null && apiMounts.isNotEmpty() )
         {
             final String prefix = currentApplication + ":";
-            apis = apiMounts.stream().map( DescriptorKey::toString ).map(
-                api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api ).collect( Collectors.toList() );
+            apis = apiMounts.stream()
+                .map( DescriptorKey::toString )
+                .map( api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api )
+                .collect( Collectors.toList() );
         }
 
         final Set<String> interfaceList = descriptor.getInterfaces();

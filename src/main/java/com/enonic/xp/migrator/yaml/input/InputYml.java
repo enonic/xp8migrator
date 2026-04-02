@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.Input;
 import com.enonic.xp.form.Occurrences;
 import com.enonic.xp.inputtype.InputTypeConfig;
@@ -19,12 +21,10 @@ import com.enonic.xp.inputtype.InputTypeDefault;
 import com.enonic.xp.inputtype.InputTypeProperty;
 import com.enonic.xp.schema.LocalizedText;
 
-import io.micronaut.core.annotation.Introspected;
-
 import static com.enonic.xp.migrator.yaml.LocalizeHelper.localizeProperty;
 
+@ReflectiveAccess
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class InputYml<T>
 {
     public String type;

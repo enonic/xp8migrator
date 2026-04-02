@@ -2,12 +2,12 @@ package com.enonic.xp.migrator.yaml;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.InlineMixin;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class FormFragmentYml
     extends FormItemYml
 {

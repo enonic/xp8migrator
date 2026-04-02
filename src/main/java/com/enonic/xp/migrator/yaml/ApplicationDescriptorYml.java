@@ -5,13 +5,13 @@ import java.util.Properties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.app.ApplicationDescriptor;
 
-import io.micronaut.core.annotation.Introspected;
-
+@ReflectiveAccess
 @JsonPropertyOrder({"kind", "title", "description", "url", "vendorName", "vendorUrl"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class ApplicationDescriptorYml
 {
     public final String kind = "Application";

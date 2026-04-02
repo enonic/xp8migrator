@@ -3,9 +3,6 @@ package com.enonic.xp.migrator.yaml.input;
 import com.enonic.xp.form.Input;
 import com.enonic.xp.inputtype.InputTypeConfig;
 
-import io.micronaut.core.annotation.Introspected;
-
-@Introspected
 public class CheckBoxYml
     extends InputYml<String>
 {

@@ -6,16 +6,16 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import io.micronaut.core.annotation.ReflectiveAccess;
+
 import com.enonic.xp.form.FormItem;
 import com.enonic.xp.form.FormOptionSetOption;
 import com.enonic.xp.schema.LocalizedText;
 
-import io.micronaut.core.annotation.Introspected;
-
 import static com.enonic.xp.migrator.yaml.LocalizeHelper.localizeProperty;
 
+@ReflectiveAccess
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Introspected
 public class FormOptionSetOptionYml
 {
     public String name;
