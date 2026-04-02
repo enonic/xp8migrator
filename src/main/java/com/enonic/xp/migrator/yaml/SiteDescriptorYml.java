@@ -70,7 +70,10 @@ public class SiteDescriptorYml
                     {
                         mapping.pattern = p.getPattern().pattern();
                     }
-                    mapping.invertPattern = p.invertPattern();
+                    if ( p.invertPattern() )
+                    {
+                        mapping.invertPattern = true;
+                    }
                 }
 
                 mapping.service = p.getService();
