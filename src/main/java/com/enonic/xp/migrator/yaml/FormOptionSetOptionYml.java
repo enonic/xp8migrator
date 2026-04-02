@@ -21,14 +21,14 @@ public class FormOptionSetOptionYml
 
     public LocalizedText helpText;
 
-    public boolean selected;
+    public Boolean selected;
 
     public List<FormItem> items;
 
     public FormOptionSetOptionYml( final FormOptionSetOption source )
     {
         name = source.getName();
-        selected = source.isDefaultOption();
+        selected = source.isDefaultOption() ? Boolean.TRUE : null;
         label = localizeProperty( source.getLabel(), source.getLabelI18nKey() );
         helpText = localizeProperty( source.getHelpText(), source.getHelpTextI18nKey() );
 

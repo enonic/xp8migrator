@@ -51,9 +51,9 @@ public class ContentTypeYml
         superType = descriptor.getSuperType().toString();
         title = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
         description = LocalizeHelper.localizeProperty( descriptor.getDescription(), descriptor.getDescriptionI18nKey() );
-        abstractValue = descriptor.isAbstract();
-        finalValue = descriptor.isFinal();
-        allowChildContent = descriptor.allowChildContent();
+        abstractValue = descriptor.isAbstract() ? Boolean.TRUE : null;
+        finalValue = descriptor.isFinal() ? Boolean.TRUE : null;
+        allowChildContent = descriptor.allowChildContent() ? null : Boolean.FALSE;
         form = descriptor.getForm();
 
         final List<String> allowChildContentTypes = descriptor.getAllowChildContentType();

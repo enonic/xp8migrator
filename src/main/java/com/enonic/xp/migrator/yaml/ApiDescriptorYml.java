@@ -37,6 +37,6 @@ public class ApiDescriptorYml
         title = descriptor.getDisplayName();
         description = descriptor.getDescription();
         documentationUrl = descriptor.getDocumentationUrl();
-        mount = descriptor.isMount() ? Set.of( "xp" ) : Set.of();
+        mount = descriptor.isMount() ? Set.of( "xp" ) : null;
     }
 }

@@ -67,6 +67,10 @@ shadowJar {
 }
 
 tasks.register('copyTestApp', Copy) {
+    outputs.upToDateWhen { false }
+    doFirst {
+        delete layout.buildDirectory.dir('test-app/myapp')
+    }
     from 'src/test/resources/myapp'
     into layout.buildDirectory.dir('test-app/myapp')
 }
