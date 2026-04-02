@@ -1,8 +1,10 @@
 package com.enonic.xp.migrator;
 
 import java.io.IOException;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Properties;
 
 import com.enonic.xp.app.ApplicationDescriptor;
 import com.enonic.xp.app.ApplicationKey;
@@ -31,6 +33,24 @@ public class ApplicationMigrator
         parser.parse();
 
         final ApplicationDescriptor descriptor = appDescriptorBuilder.build();
-        return new ApplicationDescriptorYml( descriptor );
+
+        final Properties gradleProperties = loadGradleProperties();
+
+        return new ApplicationDescriptorYml( descriptor, gradleProperties );
+    }
+
+    private Properties loadGradleProperties()
+        throws IOException
+    {
+        final Path gradlePropertiesPath = resourcesDir.resolve( "../../../gradle.properties" ).normalize();
+        final Properties properties = new Properties();
+        if ( Files.exists( gradlePropertiesPath ) )
+        {
+            try (Reader reader = Files.newBufferedReader( gradlePropertiesPath ))
+            {
+                properties.load( reader );
+            }
+        }
+        return properties;
     }
 }
