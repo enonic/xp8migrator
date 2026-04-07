@@ -21,8 +21,9 @@ import com.enonic.xp.schema.LocalizedText;
 
 public abstract class DescriptorMigrator
 {
-    private static final ObjectMapper MAPPER =
-        new ObjectMapper( new YAMLFactory().disable( YAMLGenerator.Feature.WRITE_DOC_START_MARKER ) );
+    private static final ObjectMapper MAPPER = new ObjectMapper(
+        new YAMLFactory().disable( YAMLGenerator.Feature.WRITE_DOC_START_MARKER ).enable(
+            YAMLGenerator.Feature.INDENT_ARRAYS_WITH_INDICATOR ) );
 
     static
     {

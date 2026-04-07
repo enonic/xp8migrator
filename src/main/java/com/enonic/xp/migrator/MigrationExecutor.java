@@ -31,7 +31,6 @@ public final class MigrationExecutor
         DESCRIPTORS.add( new FileDescriptorConfig( "site/site.xml", SiteMigrator::new ) );
         DESCRIPTORS.add( new FileDescriptorConfig( "site/styles.xml", StyleDescriptorMigrator::new ) );
         DESCRIPTORS.add( new FileDescriptorConfig( "idprovider/idprovider.xml", IdProviderDescriptorMigrator::new ) );
-        DESCRIPTORS.add( new DirDescriptorConfig( "apis", ApiDescriptorMigrator::new ) );
         DESCRIPTORS.add( new FileDescriptorConfig( "webapp/webapp.xml", WebappDescriptorMigrator::new ) );
     }
 
@@ -110,7 +109,6 @@ public final class MigrationExecutor
 
     private void doPostMigration( final Path resourcesDir )
     {
-        new StylesPostMigrator( resourcesDir ).migrate();
         new SiteDirPostMigrator( resourcesDir ).migrate();
         new WidgetsDirPostMigrator( resourcesDir ).migrate();
     }
