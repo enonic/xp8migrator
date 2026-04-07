@@ -2,7 +2,6 @@ package com.enonic.xp.migrator.yaml;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
@@ -10,14 +9,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.micronaut.core.annotation.ReflectiveAccess;
 
 import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.descriptor.DescriptorKey;
-import com.enonic.xp.descriptor.DescriptorKeys;
 import com.enonic.xp.site.SiteDescriptor;
 import com.enonic.xp.site.mapping.ControllerMappingDescriptors;
 import com.enonic.xp.site.processor.ResponseProcessorDescriptors;
 
 @ReflectiveAccess
-@JsonPropertyOrder({"kind", "processors", "mappings", "apis"})
+@JsonPropertyOrder({"kind", "processors", "mappings"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class SiteDescriptorYml
 {
@@ -26,8 +23,6 @@ public class SiteDescriptorYml
     public List<Processor> processors;
 
     public List<Mapping> mappings;
-
-    public List<String> apis;
 
     public SiteDescriptorYml( final ApplicationKey currentApplication, final SiteDescriptor descriptor )
     {
@@ -81,16 +76,6 @@ public class SiteDescriptorYml
 
                 mappings.add( mapping );
             } );
-        }
-
-        final DescriptorKeys apiMounts = descriptor.getApiMounts();
-        if ( apiMounts != null && apiMounts.isNotEmpty() )
-        {
-            final String prefix = currentApplication + ":";
-            apis = apiMounts.stream()
-                .map( DescriptorKey::toString )
-                .map( api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api )
-                .collect( Collectors.toList() );
         }
     }
 

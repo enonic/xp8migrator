@@ -1,6 +1,5 @@
 package com.enonic.xp.admin.tool;
 
-import java.util.Objects;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
@@ -8,7 +7,6 @@ import com.google.common.collect.ImmutableSet;
 import com.enonic.xp.annotation.PublicApi;
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.descriptor.DescriptorKey;
-import com.enonic.xp.descriptor.DescriptorKeys;
 import com.enonic.xp.resource.ResourceKey;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.security.PrincipalKey;
@@ -30,8 +28,6 @@ public final class AdminToolDescriptor
 
     private final PrincipalKeys allowedPrincipals;
 
-    private final DescriptorKeys apiMounts;
-
     private final ImmutableSet<String> interfaces;
 
     private AdminToolDescriptor( final Builder builder )
@@ -42,7 +38,6 @@ public final class AdminToolDescriptor
         description = builder.description;
         descriptionI18nKey = builder.descriptionI18nKey;
         allowedPrincipals = PrincipalKeys.from( builder.allowedPrincipals.build() );
-        apiMounts = Objects.requireNonNullElse( builder.apiMounts, DescriptorKeys.empty() );
         interfaces = builder.interfaces.build();
     }
 
@@ -101,11 +96,6 @@ public final class AdminToolDescriptor
         return interfaces.contains( interfaceName );
     }
 
-    public DescriptorKeys getApiMounts()
-    {
-        return apiMounts;
-    }
-
     public static ResourceKey toResourceKey( final DescriptorKey key )
     {
         return ResourceKey.from( key.getApplicationKey(), "admin/tools/" + key.getName() + "/" + key.getName() + ".xml" );
@@ -133,8 +123,6 @@ public final class AdminToolDescriptor
         private String description;
 
         private String descriptionI18nKey;
-
-        private DescriptorKeys apiMounts;
 
         private final ImmutableSet.Builder<PrincipalKey> allowedPrincipals = ImmutableSet.builder();
 
@@ -197,12 +185,6 @@ public final class AdminToolDescriptor
         public Builder addAllowedPrincipals( final PrincipalKey allowedPrincipal )
         {
             this.allowedPrincipals.add( allowedPrincipal );
-            return this;
-        }
-
-        public Builder apiMounts( final DescriptorKeys apiMounts )
-        {
-            this.apiMounts = apiMounts;
             return this;
         }
 

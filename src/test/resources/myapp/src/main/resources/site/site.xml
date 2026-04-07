@@ -27,8 +27,4 @@
       <pattern>/filter1</pattern>
     </mapping>
   </mappings>
-  <apis>
-    <api>admin:widget</api>
-    <api>content</api>
-  </apis>
 </site>
