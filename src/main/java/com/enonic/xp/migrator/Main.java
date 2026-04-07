@@ -29,6 +29,10 @@ public class Main
     @Option( names = {"-x", "--delete-migrated-xml"}, description = "Delete original XML files after successful migration." )
     private boolean deleteMigratedXml;
 
+    @Option( names = {"-e", "--on-exists"}, defaultValue = "ask",
+        description = "Strategy when a target file already exists: ask (default), overwrite, skip." )
+    private OnExistsStrategy onExists;
+
     @Override
     public Integer call()
     {
@@ -37,7 +41,7 @@ public class Main
         System.out.printf( "Start the migration of all descriptors for the project: %s%n", projectPath );
         System.out.printf( "Resolved applicationKey: %s%n", currentApplication );
 
-        final MigrationResult migrationResult = new MigrationExecutor( projectPath, currentApplication ).migrate();
+        final MigrationResult migrationResult = new MigrationExecutor( projectPath, currentApplication, onExists ).migrate();
 
         migrationResult.getEntries().forEach(
             ( entry ) -> System.out.println( ( entry.migrated() ? "SUCCESS" : "FAILURE" ) + " " + entry.source() ) );

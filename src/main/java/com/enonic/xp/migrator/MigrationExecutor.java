@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 import com.enonic.xp.app.ApplicationKey;
@@ -37,10 +38,13 @@ public final class MigrationExecutor
 
     private final ApplicationKey currentApplication;
 
-    public MigrationExecutor( final Path projectPath, final ApplicationKey currentApplication )
+    private final AtomicReference<OnExistsStrategy> onExists;
+
+    public MigrationExecutor( final Path projectPath, final ApplicationKey currentApplication, final OnExistsStrategy onExists )
     {
         this.projectPath = projectPath;
         this.currentApplication = currentApplication;
+        this.onExists = new AtomicReference<>( onExists );
     }
 
     public MigrationResult migrate()
@@ -87,7 +91,7 @@ public final class MigrationExecutor
             }
         } );
 
-        doPostMigration( resourcesDir );
+        doPostMigration( resourcesDir, onExists );
 
         return result;
     }
@@ -106,9 +110,9 @@ public final class MigrationExecutor
         }
     }
 
-    private void doPostMigration( final Path resourcesDir )
+    private void doPostMigration( final Path resourcesDir, final AtomicReference<OnExistsStrategy> onExists )
     {
-        new SiteDirPostMigrator( resourcesDir ).migrate();
-        new WidgetsDirPostMigrator( resourcesDir ).migrate();
+        new SiteDirPostMigrator( resourcesDir, onExists ).migrate();
+        new WidgetsDirPostMigrator( resourcesDir, onExists ).migrate();
     }
 }

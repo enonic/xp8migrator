@@ -5,8 +5,9 @@ import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicReference;
 
-public record SiteDirPostMigrator(Path resourcesDir)
+public record SiteDirPostMigrator(Path resourcesDir, AtomicReference<OnExistsStrategy> onExists)
 {
     public void migrate()
     {
@@ -38,14 +39,14 @@ public record SiteDirPostMigrator(Path resourcesDir)
 
         if ( Files.exists( mixinsDir ) )
         {
-            FileUtils.copyDirExcludingXml( mixinsDir, cmsDir.resolve( "form-fragments" ) );
+            FileUtils.copyDirExcludingXml( mixinsDir, cmsDir.resolve( "form-fragments" ), onExists );
         }
         if ( Files.exists( xDataDir ) )
         {
-            FileUtils.copyDirExcludingXml( xDataDir, cmsDir.resolve( "mixins" ) );
+            FileUtils.copyDirExcludingXml( xDataDir, cmsDir.resolve( "mixins" ), onExists );
         }
 
-        FileUtils.copyDirExcludingXml( siteDir, cmsDir, Set.of( mixinsDir, xDataDir ) );
+        FileUtils.copyDirExcludingXml( siteDir, cmsDir, Set.of( mixinsDir, xDataDir ), onExists );
     }
 }
 
