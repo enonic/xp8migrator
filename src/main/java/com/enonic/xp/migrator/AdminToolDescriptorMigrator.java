@@ -33,6 +33,6 @@ public class AdminToolDescriptorMigrator
 
         final AdminToolDescriptor descriptor = builder.build();
 
-        return new AdminToolDescriptorYml( currentApplication, descriptor );
+        return new AdminToolDescriptorYml( descriptor );
     }
 }

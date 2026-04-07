@@ -9,8 +9,6 @@ import com.enonic.xp.xml.DomElement;
 public class XmlAdminToolDescriptorParser
     extends XmlModelParser<XmlAdminToolDescriptorParser>
 {
-    private static final String APIS_DESCRIPTOR_TAG_NAME = "apis";
-
     private static final String INTERFACES_DESCRIPTOR_TAG_NAME = "interfaces";
 
     private static final String INTERFACE_DESCRIPTOR_TAG_NAME = "interface";
@@ -45,11 +43,6 @@ public class XmlAdminToolDescriptorParser
                 this.builder.addAllowedPrincipals( PrincipalKey.from( allowedPrincipal.getValue().trim() ) );
             }
         }
-
-        final ApiMountDescriptorParser apiMountDescriptorParser =
-            new ApiMountDescriptorParser( this.currentApplication, root.getChild( APIS_DESCRIPTOR_TAG_NAME ) );
-
-        this.builder.apiMounts( apiMountDescriptorParser.parse() );
 
         final DomElement interfaces = root.getChild( INTERFACES_DESCRIPTOR_TAG_NAME );
         if ( interfaces != null )

@@ -10,15 +10,12 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import io.micronaut.core.annotation.ReflectiveAccess;
 
 import com.enonic.xp.admin.tool.AdminToolDescriptor;
-import com.enonic.xp.app.ApplicationKey;
-import com.enonic.xp.descriptor.DescriptorKey;
-import com.enonic.xp.descriptor.DescriptorKeys;
 import com.enonic.xp.schema.LocalizedText;
 import com.enonic.xp.security.PrincipalKey;
 import com.enonic.xp.security.PrincipalKeys;
 
 @ReflectiveAccess
-@JsonPropertyOrder({"kind", "title", "description", "allow", "apis", "interfaces"})
+@JsonPropertyOrder({"kind", "title", "description", "allow", "interfaces"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class AdminToolDescriptorYml
 {
@@ -30,11 +27,9 @@ public class AdminToolDescriptorYml
 
     public List<String> allow;
 
-    public List<String> apis;
-
     public List<String> interfaces;
 
-    public AdminToolDescriptorYml( final ApplicationKey currentApplication, final AdminToolDescriptor descriptor )
+    public AdminToolDescriptorYml( final AdminToolDescriptor descriptor )
     {
         title = LocalizeHelper.localizeProperty( descriptor.getDisplayName(), descriptor.getDisplayNameI18nKey() );
         description = LocalizeHelper.localizeProperty( descriptor.getDescription(), descriptor.getDescriptionI18nKey() );
@@ -43,16 +38,6 @@ public class AdminToolDescriptorYml
         if ( allowedPrincipals != null && allowedPrincipals.isNotEmpty() )
         {
             allow = allowedPrincipals.stream().map( PrincipalKey::toString ).collect( Collectors.toList() );
-        }
-
-        final DescriptorKeys apiMounts = descriptor.getApiMounts();
-        if ( apiMounts != null && apiMounts.isNotEmpty() )
-        {
-            final String prefix = currentApplication + ":";
-            apis = apiMounts.stream()
-                .map( DescriptorKey::toString )
-                .map( api -> api.startsWith( prefix ) ? api.replace( prefix, "" ) : api )
-                .collect( Collectors.toList() );
         }
 
         final Set<String> interfaceList = descriptor.getInterfaces();
