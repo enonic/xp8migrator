@@ -16,21 +16,21 @@ import picocli.CommandLine.Parameters;
 
 import com.enonic.xp.app.ApplicationKey;
 
-@Command( name = "migrator", description = "Migrates XP project descriptors to XP8 format." )
+@Command(name = "migrator", description = "Migrates XP project descriptors to XP8 format.", mixinStandardHelpOptions = true)
 public class Main
     implements Callable<Integer>
 {
-    @Parameters( index = "0", arity = "0..1", defaultValue = ".", description = "Path to the project directory. Defaults to current directory." )
+    @Parameters(index = "0", arity = "0..1", defaultValue = ".", description = "Path to the project directory. Defaults to current directory.")
     private Path projectPath;
 
-    @Option( names = {"-a", "--app-name"}, description = "Application name. Resolved from gradle.properties if not provided." )
+    @Option(names = {"-a", "--app-name"}, description = "Application name. Resolved from gradle.properties if not provided.")
     private String appName;
 
-    @Option( names = {"-x", "--delete-migrated-xml"}, description = "Delete original XML files after successful migration." )
+    @Option(names = {"-x", "--delete-migrated-xml"}, description = "Delete original XML files after successful migration.")
     private boolean deleteMigratedXml;
 
-    @Option( names = {"-e", "--on-exists"}, defaultValue = "ask",
-        description = "Strategy when a target file already exists: ask (default), overwrite, skip." )
+    @Option(names = {"-e",
+        "--on-exists"}, defaultValue = "ask", description = "Strategy when a target file already exists: ask (default), overwrite, skip.")
     private OnExistsStrategy onExists;
 
     @Override
@@ -43,8 +43,8 @@ public class Main
 
         final MigrationResult migrationResult = new MigrationExecutor( projectPath, currentApplication, onExists ).migrate();
 
-        migrationResult.getEntries().forEach(
-            ( entry ) -> System.out.println( ( entry.migrated() ? "SUCCESS" : "FAILURE" ) + " " + entry.source() ) );
+        migrationResult.getEntries()
+            .forEach( ( entry ) -> System.out.println( ( entry.migrated() ? "SUCCESS" : "FAILURE" ) + " " + entry.source() ) );
 
         if ( deleteMigratedXml )
         {

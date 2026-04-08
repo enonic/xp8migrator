@@ -20,6 +20,7 @@ graalvmNative {
             buildArgs.addAll(
                 '--initialize-at-build-time=ch.qos.logback',
                 '--initialize-at-build-time=org.slf4j',
+                '--initialize-at-build-time=org.xml.sax',
                 '-H:+ReportExceptionStackTraces',
                 '-Os',
                 '--gc=epsilon'

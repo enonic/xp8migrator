@@ -44,5 +44,7 @@ The `migrator` binary can be removed after successful migration.
 
 ### Options
 
+- `-h`, `--help` - Show help message and exit.
 - `-a`, `--app-name` - Application name. Resolved from `gradle.properties` if not provided.
 - `-x`, `--delete-migrated-xml` - Delete original XML files after successful migration.
+- `-e`, `--on-exists` - Strategy when a target file already exists: `ask` (default), `overwrite`, `skip`.
