@@ -9,10 +9,15 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.enonic.xp.app.ApplicationKey;
 
 public final class MigrationExecutor
 {
+    private static final Logger LOG = LoggerFactory.getLogger( MigrationExecutor.class );
+
     private static final List<DescriptorConfig> DESCRIPTORS = new ArrayList<>();
 
     static
@@ -100,14 +105,14 @@ public final class MigrationExecutor
     {
         try
         {
-            System.out.printf( "Processing: %s%n", descriptor );
+            LOG.info( "Processing: {}", descriptor );
             migrator.migrate();
             result.addEntry( descriptor, true );
         }
         catch ( Exception e )
         {
+            LOG.error( "Failed to migrate: {}", descriptor, e );
             result.addEntry( descriptor, false );
-            throw e;
         }
     }
 
