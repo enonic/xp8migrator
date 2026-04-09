@@ -100,6 +100,7 @@ public final class MigrationExecutor
     {
         try
         {
+            System.out.printf( "Processing: %s%n", descriptor );
             migrator.migrate();
             result.addEntry( descriptor, true );
         }
