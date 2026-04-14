@@ -15,13 +15,13 @@ import com.enonic.xp.site.XDataMappings;
 import static com.google.common.base.Strings.nullToEmpty;
 
 @ReflectiveAccess
-@JsonPropertyOrder({"kind", "mixin", "form"})
+@JsonPropertyOrder({"kind", "mixins", "form"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CmsDescriptorYml
 {
     public final String kind = "CMS";
 
-    public List<XData> mixin;
+    public List<XData> mixins;
 
     public Form form;
 
@@ -32,7 +32,7 @@ public class CmsDescriptorYml
         final XDataMappings xDataMappings = descriptor.getXDataMappings();
         if ( xDataMappings != null && xDataMappings.isNotEmpty() )
         {
-            mixin = new ArrayList<>();
+            mixins = new ArrayList<>();
             xDataMappings.forEach( xDataMapping -> {
                 final XData xData = new XData();
 
@@ -43,7 +43,7 @@ public class CmsDescriptorYml
                 }
                 xData.optional = xDataMapping.getOptional();
 
-                mixin.add( xData );
+                mixins.add( xData );
             } );
         }
     }
