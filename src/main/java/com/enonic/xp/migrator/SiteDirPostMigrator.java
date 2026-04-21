@@ -19,14 +19,14 @@ public record SiteDirPostMigrator(Path resourcesDir, AtomicReference<OnExistsStr
             return;
         }
 
-        final Path imageYaml = siteDir.resolve( "image.yaml" );
-        if ( Files.exists( imageYaml ) )
+        final Path styleYaml = siteDir.resolve( "style.yaml" );
+        if ( Files.exists( styleYaml ) )
         {
             try
             {
-                final Path stylesTarget = cmsDir.resolve( "styles" );
+                final Path stylesTarget = cmsDir.resolve( "style" );
                 Files.createDirectories( stylesTarget );
-                Files.move( imageYaml, stylesTarget.resolve( "image.yaml" ) );
+                Files.move( styleYaml, stylesTarget.resolve( "style.yaml" ) );
             }
             catch ( IOException e )
             {
