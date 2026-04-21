@@ -37,6 +37,6 @@ public class StyleDescriptorMigrator
     @Override
     public Path resolveYmlFilePath( final Path source )
     {
-        return resourcesDir.resolve( "site" ).resolve( "image.yaml" );
+        return resourcesDir.resolve( "site" ).resolve( "style.yaml" );
     }
 }

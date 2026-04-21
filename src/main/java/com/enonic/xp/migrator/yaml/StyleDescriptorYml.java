@@ -16,55 +16,68 @@ import com.enonic.xp.style.StyleDescriptor;
 import static com.google.common.base.Strings.nullToEmpty;
 
 @ReflectiveAccess
-@JsonPropertyOrder({"kind", "css", "image"})
+@JsonPropertyOrder({"kind", "styles"})
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class StyleDescriptorYml
 {
     public final String kind = "Style";
 
-    public String css;
-
-    public List<Image> image;
+    public List<Image> styles;
 
     public StyleDescriptorYml( final StyleDescriptor styleDescriptor )
     {
-        if ( !nullToEmpty( styleDescriptor.getCssPath() ).isEmpty() )
-        {
-            css = styleDescriptor.getCssPath();
-        }
+        final String css =
+            !nullToEmpty( styleDescriptor.getCssPath() ).isEmpty() ? String.format( "Please migrate your styles from \"%s\" manually",
+                                                                                    styleDescriptor.getCssPath() ) : "";
+        final Editor editor = new Editor();
+        editor.css = css;
 
         final List<ElementStyle> elements = styleDescriptor.getElements();
 
         if ( elements != null && !elements.isEmpty() )
         {
-            image = new ArrayList<>();
+            styles = new ArrayList<>();
 
             elements.forEach( style -> {
                 final ImageStyle imageStyle = (ImageStyle) style;
 
                 final Image img = new Image();
 
+                img.type = "Image";
                 img.name = imageStyle.getName();
-                img.displayName = LocalizeHelper.localizeProperty( imageStyle.getDisplayName(), imageStyle.getDisplayNameI18nKey() );
+                img.label = LocalizeHelper.localizeProperty( imageStyle.getDisplayName(), imageStyle.getDisplayNameI18nKey() );
                 img.aspectRatio = imageStyle.getAspectRatio();
                 img.filter = imageStyle.getFilter();
+                img.editor = editor;
 
-                image.add( img );
+                styles.add( img );
             } );
         }
     }
 
     @ReflectiveAccess
-    @JsonPropertyOrder({"name", "displayName", "aspectRatio", "filter"})
+    @JsonPropertyOrder({"name", "type", "label", "aspectRatio", "filter", "editor"})
     @JsonInclude(JsonInclude.Include.NON_NULL)
     public static class Image
     {
         public String name;
 
-        public LocalizedText displayName;
+        public String type;
+
+        public LocalizedText label;
 
         public String aspectRatio;
 
         public String filter;
+
+        public Editor editor;
+    }
+
+    @ReflectiveAccess
+    @JsonPropertyOrder({"css"})
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class Editor
+    {
+        public String css;
     }
 }
