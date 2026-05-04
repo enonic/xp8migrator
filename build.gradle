@@ -23,7 +23,8 @@ graalvmNative {
                 '--initialize-at-build-time=org.xml.sax',
                 '-H:+ReportExceptionStackTraces',
                 '-Os',
-                '--gc=epsilon'
+                '--gc=epsilon',
+                '-march=compatibility'
             )
         }
     }
