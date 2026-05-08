@@ -3,10 +3,11 @@ package com.enonic.xp.migrator;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.io.IOException;
-import java.io.UncheckedIOException;
+import java.util.Iterator;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 import picocli.CommandLine;
 
@@ -16,6 +17,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MigratorTest
 {
+    @TempDir
+    Path tempDir;
+
     @Test
     public void testMigrator()
         throws IOException
@@ -39,11 +43,11 @@ public class MigratorTest
         assertTrue( Files.exists( appDir.resolve( "src/main/resources/application.yaml" ) ) );
     }
 
-    private static Path copyTestAppToTempDir()
+    private Path copyTestAppToTempDir()
         throws IOException
     {
         final Path sourceAppDir = Path.of( System.getProperty( "testAppDir" ) );
-        final Path appDir = Files.createTempDirectory( "xp8migrator-test-" );
+        final Path appDir = tempDir.resolve( "myapp" );
         copyDirectory( sourceAppDir, appDir );
         return appDir;
     }
@@ -53,26 +57,22 @@ public class MigratorTest
     {
         try (Stream<Path> stream = Files.walk( source ))
         {
-            stream.forEach( sourcePath -> {
-                try
+            final Iterator<Path> iterator = stream.iterator();
+            while ( iterator.hasNext() )
+            {
+                final Path sourcePath = iterator.next();
+                final Path relative = source.relativize( sourcePath );
+                final Path targetPath = target.resolve( relative );
+                if ( Files.isDirectory( sourcePath ) )
                 {
-                    final Path relative = source.relativize( sourcePath );
-                    final Path targetPath = target.resolve( relative );
-                    if ( Files.isDirectory( sourcePath ) )
-                    {
-                        Files.createDirectories( targetPath );
-                    }
-                    else
-                    {
-                        Files.createDirectories( targetPath.getParent() );
-                        Files.copy( sourcePath, targetPath );
-                    }
+                    Files.createDirectories( targetPath );
                 }
-                catch ( IOException e )
+                else
                 {
-                    throw new UncheckedIOException( e );
+                    Files.createDirectories( targetPath.getParent() );
+                    Files.copy( sourcePath, targetPath );
                 }
-            } );
+            }
         }
     }
 }
