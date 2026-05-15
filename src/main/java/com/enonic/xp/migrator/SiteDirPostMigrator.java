@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -25,8 +26,11 @@ public record SiteDirPostMigrator(Path resourcesDir, AtomicReference<OnExistsStr
             try
             {
                 final Path stylesTarget = cmsDir.resolve( "style" );
-                Files.createDirectories( stylesTarget );
-                Files.move( styleYaml, stylesTarget.resolve( "style.yaml" ) );
+                if ( !Files.exists( stylesTarget ) )
+                {
+                    Files.createDirectories( stylesTarget );
+                }
+                Files.move( styleYaml, stylesTarget.resolve( "style.yaml" ), StandardCopyOption.REPLACE_EXISTING );
             }
             catch ( IOException e )
             {
