@@ -40,7 +40,7 @@ public class SiteMigrator
         final SiteDescriptor siteDescriptor = builder.build();
 
         final Path cmsPath = resourcesDir.resolve( "site" ).resolve( "cms.yaml" );
-        new CmsMigrator( siteDescriptor, new MigrationParams( currentApplication, resourcesDir, cmsPath ) ).migrate();
+        new CmsMigrator( siteDescriptor, new MigrationParams( currentApplication, resourcesDir, cmsPath, onExists ) ).migrate();
 
         final ControllerMappingDescriptors modifiedMappings = ControllerMappingDescriptors.from(
             siteDescriptor.getMappingDescriptors().stream().map( this::remapMapDescriptor ).collect( Collectors.toList() ) );

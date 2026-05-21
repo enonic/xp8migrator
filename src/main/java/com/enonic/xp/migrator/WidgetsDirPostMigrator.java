@@ -6,14 +6,15 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public record WidgetsDirPostMigrator(Path resourcesDir, AtomicReference<OnExistsStrategy> onExists)
 {
-    public void migrate()
+    public void migrate( final MigrationResult result )
     {
-        final Path mixinDir = resourcesDir.resolve( "admin" ).resolve( "widgets" );
+        final Path widgetsDir = resourcesDir.resolve( "admin" ).resolve( "widgets" );
 
-        if ( Files.exists( mixinDir ) )
+        if ( Files.exists( widgetsDir ) )
         {
-            final Path formFragmentsDir = resourcesDir.resolve( "admin" ).resolve( "extensions" );
-            FileUtils.copyDirExcludingXml( mixinDir, formFragmentsDir, onExists );
+            final Path extensionsDir = resourcesDir.resolve( "admin" ).resolve( "extensions" );
+            FileUtils.copyDirExcludingXml( widgetsDir, extensionsDir, onExists );
+            result.addConsumedSourceDir( widgetsDir );
         }
     }
 }
