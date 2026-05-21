@@ -78,7 +78,7 @@ public final class MigrationExecutor
                             return p.equals( expected );
                         } ).forEach( descriptor -> {
                             final DescriptorMigrator migrator = descriptorConfig.migratorSupplier().apply(
-                                new MigrationParams( currentApplication, resourcesDir, descriptor ) );
+                                new MigrationParams( currentApplication, resourcesDir, descriptor, onExists ) );
                             doMigrate( result, migrator, descriptor );
                         } );
                     }
@@ -86,7 +86,7 @@ public final class MigrationExecutor
                 else
                 {
                     final DescriptorMigrator migrator = descriptorConfig.migratorSupplier().apply(
-                        new MigrationParams( currentApplication, resourcesDir, baseDirOrFilePath ) );
+                        new MigrationParams( currentApplication, resourcesDir, baseDirOrFilePath, onExists ) );
                     doMigrate( result, migrator, baseDirOrFilePath );
                 }
             }
@@ -96,7 +96,7 @@ public final class MigrationExecutor
             }
         } );
 
-        doPostMigration( resourcesDir, onExists );
+        doPostMigration( resourcesDir, onExists, result );
 
         return result;
     }
@@ -108,6 +108,7 @@ public final class MigrationExecutor
             LOG.info( "Processing: {}", descriptor );
             migrator.migrate();
             result.addEntry( descriptor, true );
+            migrator.additionalMigratedSources().forEach( extra -> result.addEntry( extra, true ) );
         }
         catch ( Exception e )
         {
@@ -116,9 +117,10 @@ public final class MigrationExecutor
         }
     }
 
-    private void doPostMigration( final Path resourcesDir, final AtomicReference<OnExistsStrategy> onExists )
+    private void doPostMigration( final Path resourcesDir, final AtomicReference<OnExistsStrategy> onExists,
+                                  final MigrationResult result )
     {
-        new SiteDirPostMigrator( resourcesDir, onExists ).migrate();
-        new WidgetsDirPostMigrator( resourcesDir, onExists ).migrate();
+        new SiteDirPostMigrator( resourcesDir, onExists ).migrate( result );
+        new WidgetsDirPostMigrator( resourcesDir, onExists ).migrate( result );
     }
 }

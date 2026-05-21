@@ -3,8 +3,11 @@ package com.enonic.xp.migrator;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -26,7 +29,8 @@ public class Main
     @Option(names = {"-a", "--app-name"}, description = "Application name. Resolved from gradle.properties if not provided.")
     private String appName;
 
-    @Option(names = {"-x", "--delete-migrated-xml"}, description = "Delete original XML files after successful migration.")
+    @Option(names = {"-x",
+        "--delete-migrated-xml"}, description = "Delete original XML/SVG files and the now-redundant site/ and admin/widgets/ directories after successful migration.")
     private boolean deleteMigratedXml;
 
     @Option(names = {"-e",
@@ -48,14 +52,14 @@ public class Main
 
         if ( deleteMigratedXml )
         {
-            deleteMigratedXmlFiles( migrationResult );
+            deleteMigratedSourceFiles( migrationResult );
         }
 
         System.out.println( "Migration completed successfully." );
         return 0;
     }
 
-    private static void deleteMigratedXmlFiles( final MigrationResult migrationResult )
+    private static void deleteMigratedSourceFiles( final MigrationResult migrationResult )
     {
         migrationResult.getEntries().stream().filter( MigrationResult.MigrationEntry::migrated ).forEach( entry -> {
             try
@@ -68,6 +72,46 @@ public class Main
                 System.err.println( "Failed to delete " + entry.source() + ": " + e.getMessage() );
             }
         } );
+
+        migrationResult.getConsumedSourceDirs().forEach( Main::deleteRecursively );
+    }
+
+    private static void deleteRecursively( final Path dir )
+    {
+        if ( !Files.exists( dir ) )
+        {
+            return;
+        }
+        try
+        {
+            Files.walkFileTree( dir, new SimpleFileVisitor<>()
+            {
+                @Override
+                public FileVisitResult visitFile( final Path file, final BasicFileAttributes attrs )
+                    throws IOException
+                {
+                    Files.delete( file );
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult postVisitDirectory( final Path subDir, final IOException exc )
+                    throws IOException
+                {
+                    if ( exc != null )
+                    {
+                        throw exc;
+                    }
+                    Files.delete( subDir );
+                    return FileVisitResult.CONTINUE;
+                }
+            } );
+            System.out.println( "DELETED " + dir );
+        }
+        catch ( IOException e )
+        {
+            System.err.println( "Failed to delete " + dir + ": " + e.getMessage() );
+        }
     }
 
     private ApplicationKey resolveApplicationKey()

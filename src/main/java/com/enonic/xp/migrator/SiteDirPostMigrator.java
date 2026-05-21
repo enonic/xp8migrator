@@ -10,7 +10,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public record SiteDirPostMigrator(Path resourcesDir, AtomicReference<OnExistsStrategy> onExists)
 {
-    public void migrate()
+    public void migrate( final MigrationResult result )
     {
         final Path siteDir = resourcesDir.resolve( "site" );
         final Path cmsDir = resourcesDir.resolve( "cms" );
@@ -51,6 +51,8 @@ public record SiteDirPostMigrator(Path resourcesDir, AtomicReference<OnExistsStr
         }
 
         FileUtils.copyDirExcludingXml( siteDir, cmsDir, Set.of( mixinsDir, xDataDir ), onExists );
+
+        result.addConsumedSourceDir( siteDir );
     }
 }
 

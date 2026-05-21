@@ -3,6 +3,8 @@ package com.enonic.xp.migrator;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.file.Path;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
@@ -43,11 +45,14 @@ public abstract class DescriptorMigrator
 
     protected final Path source;
 
+    protected final AtomicReference<OnExistsStrategy> onExists;
+
     protected DescriptorMigrator( final MigrationParams params )
     {
         this.currentApplication = params.currentApplication();
         this.resourcesDir = params.resourcesDir();
         this.source = params.source();
+        this.onExists = params.onExists();
     }
 
     public void migrate()
@@ -71,5 +76,10 @@ public abstract class DescriptorMigrator
         throws IOException
     {
         return source.getParent().resolve( source.getFileName().toString().replace( ".xml", ".yaml" ) );
+    }
+
+    public List<Path> additionalMigratedSources()
+    {
+        return List.of();
     }
 }
