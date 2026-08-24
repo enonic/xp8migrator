@@ -1,10 +1,5 @@
 package com.enonic.xp.migrator.yaml;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
@@ -28,7 +23,7 @@ public class PartDescriptorYml
 
     public Form form;
 
-    public List<Map<String, String>> config;
+    public GenericValue config;
 
     public PartDescriptorYml( final PartDescriptor source )
     {
@@ -37,18 +32,9 @@ public class PartDescriptorYml
         this.form = source.getConfig();
 
         final InputTypeConfig schemaConfig = source.getSchemaConfig();
-        if ( schemaConfig != null && schemaConfig.iterator().hasNext() )
+        if ( schemaConfig != null && schemaConfig.getSize() > 0 )
         {
-            config = new ArrayList<>();
-            schemaConfig.iterator().forEachRemaining( property -> {
-                final Map<String, String> propAsMap = new LinkedHashMap<>();
-
-                propAsMap.put( "name", property.getName() );
-                propAsMap.put( "value", property.getValue() );
-                propAsMap.putAll( property.getAttributes() );
-
-                config.add( propAsMap );
-            } );
+            config = SchemaConfigHelper.toGenericValue( schemaConfig );
         }
     }
 }

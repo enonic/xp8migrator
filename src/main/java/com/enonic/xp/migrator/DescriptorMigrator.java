@@ -11,12 +11,14 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.fasterxml.jackson.dataformat.yaml.YAMLGenerator;
 
+import com.enonic.xp.migrator.yaml.GenericValue;
 import com.enonic.xp.app.ApplicationKey;
 import com.enonic.xp.form.Form;
 import com.enonic.xp.form.FormItem;
 import com.enonic.xp.form.Occurrences;
 import com.enonic.xp.migrator.yaml.mixin.FormItemSerializer;
 import com.enonic.xp.migrator.yaml.mixin.FormSerializer;
+import com.enonic.xp.migrator.yaml.mixin.GenericValueSerializer;
 import com.enonic.xp.migrator.yaml.mixin.LocalizedTextSerializer;
 import com.enonic.xp.migrator.yaml.mixin.OccurrencesSerializer;
 import com.enonic.xp.schema.LocalizedText;
@@ -33,6 +35,7 @@ public abstract class DescriptorMigrator
 
         module.addSerializer( Form.class, new FormSerializer() );
         module.addSerializer( FormItem.class, new FormItemSerializer() );
+        module.addSerializer( GenericValue.class, new GenericValueSerializer() );
         module.addSerializer( LocalizedText.class, new LocalizedTextSerializer() );
         module.addSerializer( Occurrences.class, new OccurrencesSerializer() );
 

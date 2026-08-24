@@ -24,4 +24,11 @@
       <label>City</label>
     </input>
   </form>
+  <config>
+    <listTitleExpression>${firstName} ${lastName}</listTitleExpression>
+    <prop1 attr1="attr1p1">p1v1</prop1>
+    <prop1 attr1="attr1p2">p1v2</prop1>
+    <p2>p2v1</p2>
+    <prop3>true</prop3>
+  </config>
 </content-type>
