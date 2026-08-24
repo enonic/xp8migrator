@@ -1,8 +1,7 @@
 package com.enonic.xp.migrator.yaml;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -45,7 +44,7 @@ public class ContentTypeYml
 
     public String displayNameListExpression;
 
-    public Map<String, Object> config;
+    public GenericValue config;
 
     public Form form;
 
@@ -73,17 +72,12 @@ public class ContentTypeYml
         final InputTypeConfig schemaConfig = descriptor.getSchemaConfig();
         if ( schemaConfig != null && schemaConfig.getSize() > 0 )
         {
-            schemaConfig.iterator().forEachRemaining( property -> {
-                if ( "listTitleExpression".equals( property.getName() ) )
-                {
-                    displayNameListExpression = property.getValue();
-                }
-                else
-                {
-                    config = config != null ? config : new LinkedHashMap<>();
-                    config.put( property.getName(), property.getValue() );
-                }
-            } );
+            displayNameListExpression = schemaConfig.getValue( "listTitleExpression" );
+
+            if ( schemaConfig.getNames().stream().anyMatch( name -> !"listTitleExpression".equals( name ) ) )
+            {
+                config = SchemaConfigHelper.toGenericValue( schemaConfig, Set.of( "listTitleExpression" ) );
+            }
         }
     }
 }
