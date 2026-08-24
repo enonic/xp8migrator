@@ -25,6 +25,6 @@ public class CheckBoxYml
             }
         }
 
-        setAttributes( source );
+        setAttributes( source, "alignment" );
     }
 }
